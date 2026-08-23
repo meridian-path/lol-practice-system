@@ -1,4 +1,5 @@
 node_modules
+dist/
 TESTING.md
 visual-qa-output/
 draft_*.txt

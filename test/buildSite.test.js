@@ -11,12 +11,13 @@ const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
 
-const { build, DIST, WEB_PAGES, KNOWN_MANUAL_OUTPUTS } = require('../src/web/buildSite.js');
+const { build, DIST, WEB_PAGES, ASSETS_DIR, COPIED_ASSETS } = require('../src/web/buildSite.js');
 const site = require('../src/site.js');
 
-test('build() writes site.css, one file per WEB_PAGES entry, the SEO infra files (sitemap.xml/robots.txt/ads.txt), and the GitHub Pages CNAME file into dist/', () => {
+test('build() writes site.css, one file per WEB_PAGES entry, the SEO infra files (sitemap.xml/robots.txt/ads.txt), the GitHub Pages CNAME file, and every COPIED_ASSETS file actually present in assets/ into dist/', () => {
   const written = build();
-  const expected = ['site.css', ...WEB_PAGES.map(([name]) => name), 'sitemap.xml', 'robots.txt', 'ads.txt', 'CNAME'];
+  const presentCopiedAssets = COPIED_ASSETS.filter((f) => fs.existsSync(path.join(ASSETS_DIR, f)));
+  const expected = ['site.css', ...WEB_PAGES.map(([name]) => name), 'sitemap.xml', 'robots.txt', 'ads.txt', 'CNAME', ...presentCopiedAssets];
   assert.deepEqual(written.slice().sort(), expected.slice().sort());
   for (const f of expected) {
     assert.ok(fs.existsSync(path.join(DIST, f)), `expected ${f} to exist in dist/`);
@@ -109,35 +110,56 @@ test('build() removes a stale top-level file left in dist/ by an earlier partial
   assert.ok(!fs.existsSync(staleFile), 'a stale top-level file should be pruned by the next build()');
 });
 
-test('build() never touches dist/print/ (owned and cleaned by src/build.js) or a KNOWN_MANUAL_OUTPUTS file', () => {
+test('build() never touches dist/print/ (owned and cleaned by src/build.js)', () => {
   build();
   const printDir = path.join(DIST, 'print');
   fs.mkdirSync(printDir, { recursive: true });
   const printMarker = path.join(printDir, 'marker-from-src-build-js.html');
   fs.writeFileSync(printMarker, '<html>owned by src/build.js, not this build</html>', 'utf8');
-  // This test runs against the real dist/, not an isolated fixture dir, so
-  // stubbing each KNOWN_MANUAL_OUTPUTS file (e.g. og-image.png, a real
-  // Playwright-rendered image normally) with placeholder text -- needed to
-  // prove build() leaves it alone -- would otherwise silently leave that
-  // real, hand-run output stubbed out after every `npm test`. Save each
-  // file's original bytes first and restore them once the assertions below
-  // are done, so this test's own side effect can't undo
-  // scripts/build-og-image.js's work.
-  const originalManualContents = new Map();
-  for (const manual of KNOWN_MANUAL_OUTPUTS) {
-    const manualPath = path.join(DIST, manual);
-    if (fs.existsSync(manualPath)) originalManualContents.set(manual, fs.readFileSync(manualPath));
-    fs.writeFileSync(manualPath, 'placeholder for a hand-run output', 'utf8');
-  }
-  try {
+  build();
+  assert.ok(fs.existsSync(printMarker), 'build() must never delete anything under dist/print/');
+});
+
+test('build() copies every COPIED_ASSETS file present in assets/ into dist/ on every run, overwriting a stale dist/ copy', () => {
+  build();
+  for (const asset of COPIED_ASSETS) {
+    const assetSrc = path.join(ASSETS_DIR, asset);
+    if (!fs.existsSync(assetSrc)) continue; // nothing to prove for an asset not present in this checkout
+    const distPath = path.join(DIST, asset);
+    const realBytes = fs.readFileSync(assetSrc);
+    // Corrupt dist/'s copy to prove the next build() actually re-copies from
+    // assets/ rather than leaving whatever was already in dist/ alone --
+    // the exact behavior change from the old "never touch a manual output"
+    // contract this asset used to have.
+    fs.writeFileSync(distPath, 'stale/corrupted placeholder, not the real asset', 'utf8');
     build();
-    assert.ok(fs.existsSync(printMarker), 'build() must never delete anything under dist/print/');
-    for (const manual of KNOWN_MANUAL_OUTPUTS) {
-      assert.ok(fs.existsSync(path.join(DIST, manual)), `build() must not delete the known manual output ${manual}`);
+    assert.ok(
+      fs.readFileSync(distPath).equals(realBytes),
+      `build() must overwrite a stale dist/${asset} with the real bytes from assets/${asset} on every run`
+    );
+  }
+});
+
+test("build() never deletes a pre-existing dist/ copy of a COPIED_ASSETS file on a run where assets/ temporarily doesn't have it", () => {
+  build();
+  for (const asset of COPIED_ASSETS) {
+    const assetSrc = path.join(ASSETS_DIR, asset);
+    if (!fs.existsSync(assetSrc)) continue;
+    const distPath = path.join(DIST, asset);
+    const realBytes = fs.readFileSync(assetSrc);
+    const tempMoveTarget = `${assetSrc}.test-temp-moved`;
+    fs.renameSync(assetSrc, tempMoveTarget);
+    try {
+      build();
+      assert.ok(fs.existsSync(distPath), `build() must not delete a pre-existing dist/${asset} just because assets/${asset} is temporarily missing this run`);
+    } finally {
+      fs.renameSync(tempMoveTarget, assetSrc);
     }
-  } finally {
-    for (const [manual, original] of originalManualContents) {
-      fs.writeFileSync(path.join(DIST, manual), original);
-    }
+    // Restore dist/'s own copy too (the run above with assets/ missing left
+    // dist/ holding whatever was there before -- already correct, but a
+    // final build() with the real asset back in place keeps this test's own
+    // side effects fully cleaned up either way).
+    build();
+    assert.ok(fs.readFileSync(distPath).equals(realBytes));
   }
 });
