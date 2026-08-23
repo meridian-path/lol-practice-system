@@ -187,10 +187,10 @@
   --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
   --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
 
-  /* Radius / shadow -- max 3 radii (2 after --radius-pill's deletion --
-     it had zero consumers outside its own definition, verified by grep
-     this task), max 2 elevations. Tightened for the instrument register
-     and to match the 1-4px cluster measured on u.gg/blitz.gg. */
+  /* Radius / shadow -- max 3 radii (2 after --radius-pill's deletion,
+     which had zero consumers outside its own definition), max 2
+     elevations. Tightened for the instrument register and to match the
+     1-4px cluster measured on u.gg/blitz.gg. */
   --radius-sm: 3px; --radius-md: 6px;
 
   /* Grid -- 12/6/4 columns at >=1024 / 768-1023 / <768. --grid-max
@@ -509,9 +509,9 @@ p:last-child, li:last-child { margin-bottom: 0; }
 }
 
 /* Brand + theme toggle share one row so adding the toggle never adds a
-   fourth wrapped nav row on narrow viewports (the nav already wraps to
-   three rows at 360px -- a known, out-of-scope defect, see the architect
-   spec's findings). */
+   fourth wrapped nav row on narrow viewports (the nav itself already
+   wraps to three rows at 360px, a known limitation of the current
+   nav-link list at that width). */
 .brand-row {
   display: flex;
   align-items: center;
@@ -933,10 +933,8 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
 
 /* ---------------------------------------------------------------------------
    Footer credit line (portfolio-wide, see docs/DESIGN_PLAYBOOK.md's "What
-   stays shared across the portfolio") -- appended as its own block rather
-   than inline with the existing footer rules above so this task's diff
-   stays isolated from the in-flight theme-differentiation work in this
-   same file.
+   stays shared across the portfolio") -- kept as its own block, separate
+   from the footer rules above, so the two stay independently readable.
    --------------------------------------------------------------------------- */
 .site-footer .footer-credit {
   margin-top: var(--space-3);
