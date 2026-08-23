@@ -150,7 +150,9 @@ function renderMacroPlay() {
     ${standardEndLinks([
       [site.url('drills.html#objective-timer-precall'), 'Run the Objective-Timer Pre-Call drill'],
       [site.url('drills.html#death-audit'), 'Run the Death Audit drill'],
-      [site.url('focus-menu.html'), 'See the full Focus Menu']
+      [site.url('focus-menu.html'), 'See the full Focus Menu'],
+      [site.url('early-game.html'), 'Before macro: the first 15 minutes'],
+      [site.url('wave-management.html'), 'Wave state feeds every read on this page: Wave Management']
     ])}
   </div>`;
 

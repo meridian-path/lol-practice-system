@@ -130,6 +130,20 @@ function renderWarmupJumpList() {
     </nav>`;
 }
 
+// Maps each role-specific warmup (content/warmups.json's own ids) to its
+// climbing guide(s) -- warmups.json has one combined "solo-lane" routine
+// for Top/Mid, so that one links to both; "universal" has no single
+// climbing guide to point at and is left alone.
+const WARMUP_ROLE_GUIDES = {
+  'solo-lane': [
+    [site.url('climbing-top.html'), 'Top Lane Climbing Guide'],
+    [site.url('climbing-mid.html'), 'Mid Lane Climbing Guide']
+  ],
+  jungle: [[site.url('climbing-jungle.html'), 'Jungle Climbing Guide']],
+  adc: [[site.url('climbing-adc.html'), 'ADC Climbing Guide']],
+  support: [[site.url('climbing-support.html'), 'Support Climbing Guide']]
+};
+
 function renderWarmupCard(w) {
   const cardHtml = card({
     title: w.title,
@@ -141,7 +155,12 @@ function renderWarmupCard(w) {
       { label: 'Same-Settings Rule', value: w.sameSettingsRule }
     ]
   });
-  const backLink = `<p><a href="#warmup-top">Back to top ↑</a></p>`;
+  const roleGuideLinks = (WARMUP_ROLE_GUIDES[w.id] || [])
+    .map(([href, label]) => `<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`)
+    .join(' · ');
+  const backLink = roleGuideLinks
+    ? `<p>${roleGuideLinks} · <a href="#warmup-top">Back to top ↑</a></p>`
+    : `<p><a href="#warmup-top">Back to top ↑</a></p>`;
   return `<div id="${escapeHtml(w.id)}"><p class="slot-label">${escapeHtml(w.role)}</p>${cardHtml}${backLink}</div>`;
 }
 

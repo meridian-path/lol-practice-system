@@ -159,7 +159,9 @@ function renderEarlyGame() {
     ${standardEndLinks([
       [site.url('drills.html#recall-timing'), 'Run the Recall Timing drill'],
       [site.url('drills.html#trade-then-back'), 'Run the Trade-Then-Back Pattern drill'],
-      [site.url('focus-menu.html'), 'See the full Focus Menu']
+      [site.url('focus-menu.html'), 'See the full Focus Menu'],
+      [site.url('wave-management.html'), 'Wave Management: the core early-game lane-control skill'],
+      [site.url('macro-play.html'), 'What comes after the first 15 minutes: Macro Play and Win Condition']
     ])}
   </div>`;
 

@@ -236,7 +236,9 @@ function renderWaveManagement() {
     ${sectionsHtml}
     ${standardEndLinks([
       [site.url('drills.html#wave-freeze-setup'), 'Run the Wave-Freeze Setup drill'],
-      [site.url('focus-menu.html'), 'See the full Focus Menu']
+      [site.url('focus-menu.html'), 'See the full Focus Menu'],
+      [site.url('early-game.html'), 'Wave control in context: the first 15 minutes'],
+      [site.url('macro-play.html'), 'Where wave state leads: Macro Play and Win Condition']
     ])}
   </div>`;
 
