@@ -12,11 +12,16 @@ permissions:
   pages: write
   id-token: write
 
-# Only one deploy at a time; a new push cancels an in-flight deploy rather
-# than queueing behind it, since only the latest commit's build should ever
-# ship.
+# Only one deploy at a time PER REF; a new push cancels an in-flight run on
+# that same ref rather than queueing behind it, since only the latest
+# commit's build should ever ship. Scoped by ref (not a single fixed
+# "pages" string) so that unrelated branches/PRs don't cancel each other's
+# builds -- a single shared group meant opening one PR could kill another,
+# already-passing PR's in-flight check with a misleading "canceled" failure
+# (confirmed live: PR #25's build succeeded, then got killed mid-run when
+# PR #26 was opened seconds later, both sharing the one "pages" slot).
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
