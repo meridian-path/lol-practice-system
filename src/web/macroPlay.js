@@ -109,34 +109,34 @@ function renderMacroPlay() {
 
   const winConditionSection = `<section class="guide-section">
     <h2>Identifying Your Team's Win Condition</h2>
-    <p>A win condition is not a vibe - it is a read on your own team comp against the enemy's, made explicit early enough to actually play around. Most teams have one of three shapes, and the fastest way to lose a winnable game is correctly building an early lead toward one win condition, then accidentally playing the game like a different one once the fighting starts.</p>
+    <p>A win condition is a specific read on your own team comp against the enemy's, made explicit early enough to actually play around. Most teams have one of three shapes, and the fastest way to lose a winnable game is building an early lead correctly toward one win condition, then accidentally playing the rest of the game like a different one once the fighting starts.</p>
     ${renderWinConditionTable()}
-    <p>This read is not a one-time decision at champion select - it should be reconfirmed every time the game state changes meaningfully (an item completes, a summoner spell goes on cooldown, a lane loses or gains a plate). See ${focusLink('objective-awareness')} for how this read connects to the timers that actually let you act on it.</p>
+    <p>Reconfirm this read every time the game state changes meaningfully - an item completes, a summoner spell goes on cooldown, a lane loses or gains a plate - rather than treating champion select as the only moment that decision gets made. See ${focusLink('objective-awareness')} for how this read connects to the timers that actually let you act on it.</p>
   </section>`;
 
   const objectivePrioritySection = `<section class="guide-section">
     <h2>Objective Priority by Game State</h2>
-    <p>Every objective is worth taking, but not every objective is worth taking <em>right now</em> - the same dragon that is a free, uncontested reset at 8 minutes can be a bait that loses the game at 28 minutes if it pulls your team away from Baron vision. Priority shifts across three broad phases.</p>
+    <p>Every objective is worth taking eventually, but timing decides whether taking it right now helps or hurts: the same dragon that is a free, uncontested reset at 8 minutes can be a bait that loses the game at 28 minutes if it pulls your team away from Baron vision. Priority shifts across three broad phases.</p>
     ${renderObjectivePriorityTable()}
-    ${callout('None of this replaces reading the actual game in front of you - these are defaults for when you have no stronger read, not a script to follow blindly into a lost fight.')}
+    ${callout('None of this replaces reading the actual game in front of you - these are defaults for when you have no stronger read, never a script to force blindly into a fight you can already see is lost.')}
   </section>`;
 
   const rankMistakesSection = `<section class="guide-section">
     <h2>Macro Mistakes by Rank</h2>
-    <p>The specific macro mistake changes by rank, but the underlying pattern is the same one your lane-phase mistakes probably already showed: reacting to what is directly in front of you instead of reading the wider game state first.</p>
+    <p>The specific macro mistake changes by rank, but the underlying pattern is the same one your lane-phase mistakes probably already showed: reacting to what's directly in front of you before reading the wider game state.</p>
     ${renderRankMistakeTable()}
-    <p>If your own repeat mistake is not on this table, your own VOD review will find it faster than a generic list can - the point of this table is a starting diagnosis, not a complete one.</p>
+    <p>Treat this table as a starting point - your own VOD review will find your specific repeat mistake faster than any generic list can.</p>
   </section>`;
 
   const focusIntegrationSection = `<section class="guide-section">
     <h2>How This Ties Into the 12 Focuses</h2>
-    <p>Nothing here is a new system layered on top of the program - it is the macro-game context for three focuses you may already be holding:</p>
+    <p>Three focuses on the existing menu get their macro-game context filled in here:</p>
     <ul>
-      <li>${focusLink('objective-awareness')} - the objective-priority table above is exactly what this focus measures: calling timers early enough to act on them, not just reacting once they spawn.</li>
+      <li>${focusLink('objective-awareness')} - the objective-priority table above is exactly what this focus measures: calling timers early enough to act on them, rather than just reacting once they spawn.</li>
       <li>${focusLink('death-cause')} - the Iron-Bronze row above (fighting because a fight is available) is usually the single biggest driver of a repeat death cause at that rank band.</li>
       <li>${focusLink('vision-cadence')} - the Silver-Gold row above (ignoring wards in favor of farming) is a vision-cadence problem wearing a macro-mistake label.</li>
     </ul>
-    <p>If you haven't picked a focus yet, start at the <a href="${escapeHtml(site.url('focus-menu.html'))}">Focus Menu</a> and pick the one your baseline shows is weakest - this page is context for whichever one you land on, not a replacement for holding one at a time.</p>
+    <p>New to the program? The <a href="${escapeHtml(site.url('focus-menu.html'))}">Focus Menu</a> is where you pick your first focus - base that choice on what your own baseline actually shows is weakest, not on whichever focus this page happened to mention.</p>
   </section>`;
 
   const sectionsHtml = `${winConditionSection}
