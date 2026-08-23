@@ -195,7 +195,8 @@ function renderProgram() {
     endLinksHtml: standardEndLinks([
       [site.url('focus-menu.html'), 'Pick your first focus from the Focus Menu'],
       [site.url('warmup.html'), 'Warmup routines by role'],
-      [site.url('drills.html'), 'The 12 practice-tool drills']
+      [site.url('drills.html'), 'The 12 practice-tool drills'],
+      [site.url('early-game.html'), 'Early Game Fundamentals: your first 15 minutes']
     ])
   });
 }
@@ -241,7 +242,8 @@ function renderFocusMenu() {
     sectionsHtml,
     endLinksHtml: standardEndLinks([
       [site.url('drills.html'), 'All 12 practice-tool drills'],
-      [site.url('baseline.html'), 'Read your baseline first']
+      [site.url('baseline.html'), 'Read your baseline first'],
+      [site.url('early-game.html'), 'Early Game Fundamentals: your first 15 minutes']
     ])
   });
 }
