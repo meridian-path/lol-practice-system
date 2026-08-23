@@ -205,6 +205,7 @@ const JUNGLE = {
   endLinks: [
     [site.url('drills.html#jungle-clear-timing'), 'Run the Jungle Clear Timing drill'],
     [site.url('drills.html#objective-timer-precall'), 'Run the Objective-Timer Pre-Call drill'],
+    [site.url('vision.html'), 'Vision around your own camps and pits, in depth: Vision and Warding'],
     [site.url('focus-menu.html'), 'See the full Focus Menu'],
     [site.url('macro-play.html'), 'Objective priority and win conditions, mapped out in full: Macro Play'],
     [site.url('early-game.html'), 'What the early clear and first ganks are actually setting up: Early Game Fundamentals']
@@ -316,6 +317,7 @@ const SUPPORT = {
   endLinks: [
     [site.url('drills.html#ward-clock'), 'Run the Ward Clock drill'],
     [site.url('drills.html#no-flame-comms'), 'Run the No-Flame Comms drill'],
+    [site.url('vision.html'), 'The rhythm-based warding this page builds on, in depth: Vision and Warding'],
     [site.url('focus-menu.html'), 'See the full Focus Menu'],
     [site.url('macro-play.html'), 'Objective priority by game state, the read this page\'s vision coverage feeds: Macro Play'],
     [site.url('early-game.html'), 'Engage timing starts with the same first-15-minutes read: Early Game Fundamentals']

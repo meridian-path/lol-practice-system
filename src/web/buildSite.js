@@ -28,10 +28,11 @@ const { CONTENT_PAGES } = require('./contentPages.js');
 // drills.html (12 cards, anchor id + back-link per
 // drill) and warmup.html (5 role routines with anchors).
 const { DRILL_WARMUP_PAGES } = require('./drillWarmupPages.js');
-// early-game.html, macro-play.html, wave-management.html -- standalone content-gap pages (not guide.js-derived).
+// early-game.html, macro-play.html, wave-management.html, vision.html -- standalone content-gap pages (not guide.js-derived).
 const { renderEarlyGame } = require('./earlyGame.js');
 const { renderMacroPlay } = require('./macroPlay.js');
 const { renderWaveManagement } = require('./waveManagement.js');
+const { renderVisionWarding } = require('./visionWarding.js');
 // climbing-{role}.html -- 5 standalone content-gap pages, one per role.
 const {
   renderTopGuide,
@@ -136,6 +137,7 @@ const WEB_PAGES = [
   ['early-game.html', renderEarlyGame],
   ['macro-play.html', renderMacroPlay],
   ['wave-management.html', renderWaveManagement],
+  ['vision.html', renderVisionWarding],
   ['climbing-top.html', renderTopGuide],
   ['climbing-jungle.html', renderJungleGuide],
   ['climbing-mid.html', renderMidGuide],
