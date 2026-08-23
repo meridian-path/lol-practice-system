@@ -197,7 +197,8 @@ function renderProgram() {
       [site.url('warmup.html'), 'Warmup routines by role'],
       [site.url('drills.html'), 'The 12 practice-tool drills'],
       [site.url('early-game.html'), 'Early Game Fundamentals: your first 15 minutes'],
-      [site.url('macro-play.html'), 'Macro Play and Win Condition Identification']
+      [site.url('macro-play.html'), 'Macro Play and Win Condition Identification'],
+      [site.url('wave-management.html'), 'Wave Management: freeze, slow push, fast push']
     ])
   });
 }
@@ -245,7 +246,8 @@ function renderFocusMenu() {
       [site.url('drills.html'), 'All 12 practice-tool drills'],
       [site.url('baseline.html'), 'Read your baseline first'],
       [site.url('early-game.html'), 'Early Game Fundamentals: your first 15 minutes'],
-      [site.url('macro-play.html'), 'Macro Play and Win Condition Identification']
+      [site.url('macro-play.html'), 'Macro Play and Win Condition Identification'],
+      [site.url('wave-management.html'), 'Wave Management: freeze, slow push, fast push']
     ])
   });
 }

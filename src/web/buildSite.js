@@ -28,9 +28,10 @@ const { CONTENT_PAGES } = require('./contentPages.js');
 // drills.html (12 cards, anchor id + back-link per
 // drill) and warmup.html (5 role routines with anchors).
 const { DRILL_WARMUP_PAGES } = require('./drillWarmupPages.js');
-// early-game.html, macro-play.html -- standalone content-gap pages (not guide.js-derived).
+// early-game.html, macro-play.html, wave-management.html -- standalone content-gap pages (not guide.js-derived).
 const { renderEarlyGame } = require('./earlyGame.js');
 const { renderMacroPlay } = require('./macroPlay.js');
+const { renderWaveManagement } = require('./waveManagement.js');
 
 // home (replaces this file's original minimal stub),
 // tracker, downloads, about, and privacy. Each of these pages lives in its
@@ -99,7 +100,8 @@ const WEB_PAGES = [
   // drills.html, warmup.html.
   ...DRILL_WARMUP_PAGES,
   ['early-game.html', renderEarlyGame],
-  ['macro-play.html', renderMacroPlay]
+  ['macro-play.html', renderMacroPlay],
+  ['wave-management.html', renderWaveManagement]
 ];
 
 function build() {
