@@ -66,3 +66,33 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+
+      # Ping IndexNow after a successful deploy so
+      # Bing/Yandex/Naver/Seznam/Yep get an instant crawl signal instead of
+      # waiting on their own periodic schedule. Self-service, no account or
+      # API key -- the key file at assets/<key>.txt (copied into dist/ on
+      # every build by src/web/buildSite.js's copyTrackedAssets()) is what
+      # proves ownership. Reads the sitemap from the just-deployed live site
+      # rather than the local dist/ (this job has no checkout of its own),
+      # so it also doubles as a smoke check that the deploy actually served
+      # the sitemap correctly. Non-fatal on failure -- a third-party ping
+      # API hiccup should never fail an otherwise-successful deploy.
+      - name: Ping IndexNow (Bing/Yandex/Naver/Seznam/Yep)
+        run: |
+          set +e
+          URLS=$(curl -sf "${{ steps.deployment.outputs.page_url }}sitemap.xml" \
+            | grep -oP '(?<=<loc>)[^<]+' \
+            | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          if [ -z "$URLS" ] || [ "$URLS" = "[]" ]; then
+            echo "::warning::IndexNow ping skipped -- could not fetch/parse the live sitemap.xml"
+            exit 0
+          fi
+          HTTP_STATUS=$(curl -s -o /tmp/indexnow-response.txt -w '%{http_code}' \
+            -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json' \
+            -d "{\"host\": \"lol-practice-system.com\", \"key\": \"7f91145eb345dbdc125025ab9faf0c6482c302aa1b92d73a7b8e20a76f818668\", \"urlList\": $URLS}")
+          echo "IndexNow submission: HTTP $HTTP_STATUS for $(echo "$URLS" | jq 'length') URLs"
+          cat /tmp/indexnow-response.txt
+          if [ "$HTTP_STATUS" != "200" ] && [ "$HTTP_STATUS" != "202" ]; then
+            echo "::warning::IndexNow submission returned HTTP $HTTP_STATUS (non-fatal)"
+          fi

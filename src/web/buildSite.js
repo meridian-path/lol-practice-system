@@ -69,7 +69,13 @@ const DIST = path.join(__dirname, '..', '..', 'dist');
 // committed. Mirrors filetools' own src/build.js ASSETS_DIR/copy-if-present
 // pattern for its equivalent pre-generated identity assets.
 const ASSETS_DIR = path.join(__dirname, '..', '..', 'assets');
-const COPIED_ASSETS = ['og-image.png'];
+const COPIED_ASSETS = [
+  'og-image.png',
+  // IndexNow key file -- must be served at https://<host>/<key>.txt
+  // verbatim, so it's a copied-in tracked asset like og-image.png rather
+  // than anything build-generated.
+  '7f91145eb345dbdc125025ab9faf0c6482c302aa1b92d73a7b8e20a76f818668.txt'
+];
 
 function copyTrackedAssets() {
   const copied = [];
