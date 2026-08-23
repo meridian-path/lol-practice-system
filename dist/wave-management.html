@@ -6,13 +6,13 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1C1B18">
-  <title>Privacy | Solo Queue Practice</title>
-  <meta name="description" content="What Solo Queue Practice collects (nothing directly), and how its analytics and advertising partners use cookies.">
-  <link rel="canonical" href="https://lol-practice-system.com/privacy.html">
-  <meta property="og:title" content="Privacy | Solo Queue Practice">
-  <meta property="og:description" content="What Solo Queue Practice collects (nothing directly), and how its analytics and advertising partners use cookies.">
-  <meta property="og:url" content="https://lol-practice-system.com/privacy.html">
-  <meta property="og:type" content="website">
+  <title>Wave Management Guide | Solo Queue Practice</title>
+  <meta name="description" content="A guide to League of Legends wave management: how to freeze, slow-push, and fast-push a lane on purpose, when to use each, and the mistakes that repeat by rank.">
+  <link rel="canonical" href="https://lol-practice-system.com/wave-management.html">
+  <meta property="og:title" content="Wave Management Guide | Solo Queue Practice">
+  <meta property="og:description" content="A guide to League of Legends wave management: how to freeze, slow-push, and fast-push a lane on purpose, when to use each, and the mistakes that repeat by rank.">
+  <meta property="og:url" content="https://lol-practice-system.com/wave-management.html">
+  <meta property="og:type" content="article">
   <meta property="og:site_name" content="Solo Queue Practice">
   <meta property="og:image" content="https://lol-practice-system.com/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -188,10 +188,10 @@
   --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
   --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
 
-  /* Radius / shadow -- max 3 radii (2 after --radius-pill's deletion,
-     which had zero consumers outside its own definition), max 2
-     elevations. Tightened for the instrument register and to match the
-     1-4px cluster measured on u.gg/blitz.gg. */
+  /* Radius / shadow -- max 3 radii (2 after --radius-pill's deletion --
+     it had zero consumers outside its own definition, verified by grep
+     this task), max 2 elevations. Tightened for the instrument register
+     and to match the 1-4px cluster measured on u.gg/blitz.gg. */
   --radius-sm: 3px; --radius-md: 6px;
 
   /* Grid -- 12/6/4 columns at >=1024 / 768-1023 / <768. --grid-max
@@ -510,9 +510,9 @@ p:last-child, li:last-child { margin-bottom: 0; }
 }
 
 /* Brand + theme toggle share one row so adding the toggle never adds a
-   fourth wrapped nav row on narrow viewports (the nav itself already
-   wraps to three rows at 360px, a known limitation of the current
-   nav-link list at that width). */
+   fourth wrapped nav row on narrow viewports (the nav already wraps to
+   three rows at 360px -- a known, out-of-scope defect, see the architect
+   spec's findings). */
 .brand-row {
   display: flex;
   align-items: center;
@@ -976,8 +976,10 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
 
 /* ---------------------------------------------------------------------------
    Footer credit line (portfolio-wide, see docs/DESIGN_PLAYBOOK.md's "What
-   stays shared across the portfolio") -- kept as its own block, separate
-   from the footer rules above, so the two stay independently readable.
+   stays shared across the portfolio") -- appended as its own block rather
+   than inline with the existing footer rules above so this task's diff
+   stays isolated from the in-flight theme-differentiation work in this
+   same file.
    --------------------------------------------------------------------------- */
 .site-footer .footer-credit {
   margin-top: var(--space-3);
@@ -996,7 +998,7 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
 .footer-social .brand-mark-line { stroke: var(--brand-mark-line); }
 .footer-social .brand-mark-dot { fill: var(--brand-mark-dot); }
 </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Privacy","description":"What Solo Queue Practice collects (nothing directly), and how its analytics and advertising partners use cookies.","datePublished":"2026-08-23","dateModified":"2026-08-23","author":{"@type":"Organization","name":"Solo Queue Practice"},"publisher":{"@type":"Organization","name":"Solo Queue Practice"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://lol-practice-system.com/privacy.html"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Wave Management: Freeze, Slow Push, Fast Push","description":"A guide to League of Legends wave management: how to freeze, slow-push, and fast-push a lane on purpose, when to use each, and the mistakes that repeat by rank.","datePublished":"2026-08-23","dateModified":"2026-08-23","author":{"@type":"Organization","name":"Solo Queue Practice"},"publisher":{"@type":"Organization","name":"Solo Queue Practice"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://lol-practice-system.com/wave-management.html"}}</script>
   <script data-goatcounter="https://dylangerrrrkerl.goatcounter.com/count" data-goatcounter-settings='{"allow_query":["utm_source","utm_medium","utm_campaign","utm_content","utm_term","ref"]}' async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -1021,22 +1023,108 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
   </header>
   <main id="main" class="page-shell">
 <div class="zone-measure">
-    <h1>Privacy</h1>
-    <p class="lead">This page explains what happens to your data on Solo Queue Practice. Short version: there are no accounts, no forms, and no sign-ups anywhere on this site - what gets collected comes from your browser and from the two third-party services described below, not from anything you type in.</p>
-    <h2>Analytics</h2>
-    <p>This site may use GoatCounter, a privacy-focused analytics tool, to count page views. GoatCounter does not use cookies and does not build a profile of individual visitors - it reports aggregate numbers only, such as how many people viewed a page and roughly where the traffic came from, never anything tied back to you personally.</p>
-    <h2>Advertising</h2>
-    <p>This site may show ads served by Google AdSense. Google and its advertising partners can set cookies or use similar technology in your browser to serve ads based on your visits to this and other sites, and to measure how those ads perform. This site does not control what those cookies do - that is between you and Google.</p>
-    <p>You can review and adjust what Google uses for ad personalization at <a href="https://adssettings.google.com/">Google Ads Settings</a>, and opt out of personalized advertising more broadly at the Digital Advertising Alliance's <a href="https://optout.aboutads.info/">consumer opt-out page</a>. Most browsers also let you block third-party cookies entirely from their own privacy settings.</p>
-    <h2>What this site does not do</h2>
+    <h1>Wave Management: Freeze, Slow Push, Fast Push</h1>
+    <p class="lead">Wave management is picking where the minion wave sits on purpose, instead of letting it drift wherever last-hitting happens to leave it. This page covers the three deliberate states - freeze, slow push, fast push - what each one looks like on the lane, when to use it, and the mistakes that repeat at every rank.</p>
+    <section class="guide-section">
+    <h2>The Three Wave States, and What Each One Looks Like</h2>
+    <p>Wave management sounds abstract until you picture the wave as one point on the lane, pulled toward whichever side currently has more minions at the clash. Everything below - freezing, slow-pushing, fast-pushing - is the same underlying mechanic, aimed at three different clash positions on purpose.</p>
+    <div class="wave-diagram-stack">
+      <div>
+        <h3>Freeze</h3>
+        <figure class="wave-diagram">
+    <svg role="img" aria-labelledby="wave-diagram-freeze-title wave-diagram-freeze-desc" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+      <title id="wave-diagram-freeze-title">Frozen wave sitting near your own tower</title>
+      <desc id="wave-diagram-freeze-desc">The clash point sits close to your tower because the enemy wave outnumbers yours, so it keeps pushing toward you while your tower keeps it from crashing in.</desc>
+      <line x1="40" y1="60" x2="560" y2="60" class="wave-track"></line>
+      <rect x="20" y="40" width="20" height="40" rx="2" class="wave-tower-ally"></rect>
+      <rect x="560" y="40" width="20" height="40" rx="2" class="wave-tower-enemy"></rect>
+      <text x="30" y="96" class="wave-tower-label" text-anchor="middle">You</text>
+      <text x="570" y="96" class="wave-tower-label" text-anchor="middle">Enemy</text>
+      <circle class="wave-dot-ally" cx="123.6" cy="53" r="5"></circle><circle class="wave-dot-ally" cx="114.6" cy="67" r="5"></circle>
+      <circle class="wave-dot-enemy" cx="143.6" cy="53" r="5"></circle><circle class="wave-dot-enemy" cx="152.6" cy="67" r="5"></circle><circle class="wave-dot-enemy" cx="161.6" cy="53" r="5"></circle><circle class="wave-dot-enemy" cx="170.6" cy="67" r="5"></circle>
+    </svg>
+    <figcaption class="wave-diagram-caption">Freeze: The clash point sits close to your tower because the enemy wave outnumbers yours, so it keeps pushing toward you while your tower keeps it from crashing in.</figcaption>
+  </figure>
+        <p>You only last-hit, and you let one or two enemy minions live each wave instead of killing everything. The enemy wave outnumbers yours, so the clash point sits near your own tower - not the lane's midpoint - where your tower keeps the wave from pushing any further in. That position denies the enemy safe CS: any minion they want has to be last-hit inside your tower's range.</p>
+      </div>
+      <div>
+        <h3>Slow Push</h3>
+        <figure class="wave-diagram">
+    <svg role="img" aria-labelledby="wave-diagram-slow-push-title wave-diagram-slow-push-desc" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+      <title id="wave-diagram-slow-push-title">Slow-pushing wave building up past the midpoint</title>
+      <desc id="wave-diagram-slow-push-desc">Your wave already outnumbers the enemy wave and the clash point has moved past the midpoint, growing bigger each cycle as you keep only killing enough to stay safe.</desc>
+      <line x1="40" y1="60" x2="560" y2="60" class="wave-track"></line>
+      <rect x="20" y="40" width="20" height="40" rx="2" class="wave-tower-ally"></rect>
+      <rect x="560" y="40" width="20" height="40" rx="2" class="wave-tower-enemy"></rect>
+      <text x="30" y="96" class="wave-tower-label" text-anchor="middle">You</text>
+      <text x="570" y="96" class="wave-tower-label" text-anchor="middle">Enemy</text>
+      <circle class="wave-dot-ally" cx="316.0" cy="53" r="5"></circle><circle class="wave-dot-ally" cx="307.0" cy="67" r="5"></circle><circle class="wave-dot-ally" cx="298.0" cy="53" r="5"></circle><circle class="wave-dot-ally" cx="289.0" cy="67" r="5"></circle><circle class="wave-dot-ally" cx="280.0" cy="53" r="5"></circle>
+      <circle class="wave-dot-enemy" cx="336.0" cy="53" r="5"></circle><circle class="wave-dot-enemy" cx="345.0" cy="67" r="5"></circle>
+    </svg>
+    <figcaption class="wave-diagram-caption">Slow Push: Your wave already outnumbers the enemy wave and the clash point has moved past the midpoint, growing bigger each cycle as you keep only killing enough to stay safe.</figcaption>
+  </figure>
+        <p>You kill caster minions but leave melee minions alive, so your side gains extra minions each cycle without immediately crashing the wave. Over two or three waves the clash point drifts past the midpoint and the wave grows large enough to threaten a tower plate or force the enemy to give up CS to avoid it.</p>
+      </div>
+      <div>
+        <h3>Fast Push</h3>
+        <figure class="wave-diagram">
+    <svg role="img" aria-labelledby="wave-diagram-fast-push-title wave-diagram-fast-push-desc" viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg">
+      <title id="wave-diagram-fast-push-title">Fast-pushed wave crashing into the enemy tower</title>
+      <desc id="wave-diagram-fast-push-desc">The clash point has reached the enemy tower and the enemy wave is gone, so the tower is now doing the work of holding your minions there while you are free to leave lane.</desc>
+      <line x1="40" y1="60" x2="560" y2="60" class="wave-track"></line>
+      <rect x="20" y="40" width="20" height="40" rx="2" class="wave-tower-ally"></rect>
+      <rect x="560" y="40" width="20" height="40" rx="2" class="wave-tower-enemy"></rect>
+      <text x="30" y="96" class="wave-tower-label" text-anchor="middle">You</text>
+      <text x="570" y="96" class="wave-tower-label" text-anchor="middle">Enemy</text>
+      <circle class="wave-dot-ally" cx="498.0" cy="53" r="5"></circle>
+      
+    </svg>
+    <figcaption class="wave-diagram-caption">Fast Push: The clash point has reached the enemy tower and the enemy wave is gone, so the tower is now doing the work of holding your minions there while you are free to leave lane.</figcaption>
+  </figure>
+        <p>You clear the entire wave, melee included, as fast as your kit allows. The clash point reaches the enemy tower and stays there - a wave sitting at a tower does not push further on its own - which is what actually frees you to roam or recall without handing the enemy a free push of their own.</p>
+      </div>
+    </div>
+  </section>
+    <section class="guide-section">
+    <h2>When and Why To Use Each Pattern</h2>
+    <p>None of the three patterns is better than the others in general - each one answers a different question about what you need from the lane right now.</p>
+    <table class="data-table"><thead><tr><th scope="col">Pattern</th><th scope="col">Use It When</th><th scope="col">What It Buys You</th></tr></thead><tbody><tr><td>Freeze</td><td>You are behind on levels or items and need a safe lane, or you want to bait the enemy into your tower range for a jungler gank.</td><td>Denied enemy CS and a stable, low-risk lane while you catch back up.</td></tr><tr><td>Slow Push</td><td>You want to roam or set up a recall without giving the wave away, and the enemy has no fast-clear tool to punish the buildup.</td><td>A wave that occupies the enemy laner or threatens a plate while you are doing something else.</td></tr><tr><td>Fast Push</td><td>You need to leave lane right now - to roam, recall, or answer a call elsewhere on the map - without leaving a live wave for the enemy to push back.</td><td>A safe window to be absent from lane, since the wave is parked at a tower instead of walking toward yours.</td></tr></tbody></table>
+    <p>Picking the right pattern is a read on your own game state first. See <a href="/focus-menu.html#trade-discipline">Trade Discipline</a> for the trade side of that same read.</p>
+  </section>
+    <section class="guide-section">
+    <h2>Wave Management By Role</h2>
+    <p>The three patterns above apply to every lane, but which one matters most - and what it buys you - shifts by role.</p>
     <ul>
-      <li>No account creation, no login, no password, anywhere on the site.</li>
-      <li>No email collection - every download here is free with nothing to fill in.</li>
-      <li>No sale of any data to anyone, because none is collected here to sell.</li>
+      <li><strong>Top:</strong> the most isolated lane, so a freeze or slow push you set up yourself has to hold with no help; a fast push is what actually enables a split-push threat later, not just a recall.</li>
+      <li><strong>Jungle:</strong> you do not hold a wave yourself, but reading a laner's wave state before you gank changes everything - a gank into a freeze the enemy laner is holding walks you into a bad trade near their tower.</li>
+      <li><strong>Mid:</strong> a fast push is a roam ticket; a slow push denies the enemy laner the freedom to roam themselves. Central position means both directions matter every game.</li>
+      <li><strong>ADC:</strong> almost always paired with a support, so wave state has to be a shared decision - freezing without telling your support invites a dive neither of you is set up to survive.</li>
+      <li><strong>Support:</strong> vision around the clash point is what makes any of this safe to hold - a freeze near your own tower without river vision is just a slower way to get dove.</li>
     </ul>
-    <h2>Changes</h2>
-    <p>If this policy changes, the change will be posted on this page with an updated date. Last updated 2026-08-21.</p>
-    <a class="btn-primary" href="/">Back to the program</a>
+  </section>
+    <section class="guide-section">
+    <h2>Common Mistakes and How To Fix Them</h2>
+    <p>Each pattern has its own way to fail, and the failure mode changes by rank more than by pattern.</p>
+    <table class="data-table"><thead><tr><th scope="col">Pattern</th><th scope="col">Iron-Bronze Mistake</th><th scope="col">Gold-Plat+ Mistake</th></tr></thead><tbody><tr><td>Freeze</td><td>Auto-attacking a minion out of habit, pushing the wave forward and losing the freeze by accident.</td><td>Holding the freeze correctly but never cashing it in - the opponent adapts and the denied CS stops mattering.</td></tr><tr><td>Slow Push</td><td>Killing every minion including melee, which crashes the wave early instead of letting it build.</td><td>Building the push correctly, then staying in lane to defend it instead of using the window it was built for.</td></tr><tr><td>Fast Push</td><td>Trying to fast-push without the clear speed to finish it, walking away from a half-cleared wave that gets punished.</td><td>Fast-pushing on a timer instead of on a read - clearing and leaving even when there was nowhere useful to go.</td></tr></tbody></table>
+    <p class="callout">If your own mistake isn’t on this table, that’s fine - this is a starting point. Practice Tool with two bots on your own side is the fastest way to find your specific one.</p>
+  </section>
+    <section class="guide-section">
+    <h2>Where This Fits In the 12-Focus Program</h2>
+    <p><a href="/focus-menu.html#wave-management">Wave Management</a> is the focus this entire page expands on - everything above is the detail behind that one line on the Focus Menu. Two more focuses connect directly to it:</p>
+    <ul>
+      <li><a href="/focus-menu.html#recall-efficiency">Recall Efficiency</a> - a good recall is timed to wave state; knowing which of the three patterns you are currently holding is what makes that timing possible instead of guesswork.</li>
+      <li><a href="/focus-menu.html#pressured-farming">Farming Under Pressure</a> - holding a freeze while under pressure is the exact skill this focus measures, applied to the specific case where the pressure is coming from an opponent who also knows how to freeze.</li>
+    </ul>
+    <p>Working through the program in order? The <a href="/focus-menu.html">Focus Menu</a> is where wave-management sits alongside the other eleven - this page is the deep dive for whenever that one comes up, not a separate track to run through on its own.</p>
+  </section>
+    <nav class="cross-links" aria-label="Related pages">
+      <ul>
+      <li><a href="/drills.html#wave-freeze-setup">Run the Wave-Freeze Setup drill</a></li>
+      <li><a href="/focus-menu.html">See the full Focus Menu</a></li>
+      <li><a href="/tracker.html">Get the free tracker spreadsheet</a></li>
+      <li><a href="/downloads.html">Download the full printable pack</a></li>
+      </ul>
+    </nav>
   </div>
   </main>
   <footer class="site-footer">
