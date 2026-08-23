@@ -314,6 +314,21 @@ main.page-shell {
   .zone-measure { grid-column: 1 / span 6; }
   .zone-content { grid-column: 1 / span 12; }
   .zone-rail    { grid-column: 8 / span 5; }
+  /* A lone .zone-measure with no sibling zone-content/zone-rail is a
+     whole plain-prose page (every guide/content page's own builder wraps
+     its entire body in exactly one zone-measure div), not the homepage
+     hero paired with a rail -- the only other place .zone-measure is
+     used. Left at the 6-of-12-column placement above, a solo page like
+     this reads as content pinned to the left edge with the right half of
+     the page empty. Center it across the grid's full width instead --
+     max-width: var(--measure) above already caps the actual prose
+     column at 66ch, so this only changes where that capped column sits.
+     Per design-standards.md: "prose ... positioned by the grid rather
+     than left-orphaned in a wider container." */
+  .page-shell > .zone-measure:only-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
 }
 
 /* Safety net for any future single-item grid section: a lone child spans
