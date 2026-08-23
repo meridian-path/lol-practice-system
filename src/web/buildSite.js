@@ -32,6 +32,14 @@ const { DRILL_WARMUP_PAGES } = require('./drillWarmupPages.js');
 const { renderEarlyGame } = require('./earlyGame.js');
 const { renderMacroPlay } = require('./macroPlay.js');
 const { renderWaveManagement } = require('./waveManagement.js');
+// climbing-{role}.html -- 5 standalone content-gap pages, one per role.
+const {
+  renderTopGuide,
+  renderJungleGuide,
+  renderMidGuide,
+  renderAdcGuide,
+  renderSupportGuide
+} = require('./roleGuides.js');
 
 // home (replaces this file's original minimal stub),
 // tracker, downloads, about, and privacy. Each of these pages lives in its
@@ -121,7 +129,12 @@ const WEB_PAGES = [
   ...DRILL_WARMUP_PAGES,
   ['early-game.html', renderEarlyGame],
   ['macro-play.html', renderMacroPlay],
-  ['wave-management.html', renderWaveManagement]
+  ['wave-management.html', renderWaveManagement],
+  ['climbing-top.html', renderTopGuide],
+  ['climbing-jungle.html', renderJungleGuide],
+  ['climbing-mid.html', renderMidGuide],
+  ['climbing-adc.html', renderAdcGuide],
+  ['climbing-support.html', renderSupportGuide]
 ];
 
 function build() {
