@@ -42,7 +42,7 @@
     "procedure": [
       "Set up a lane with your minions slightly ahead of the enemy's, near your side of the map.",
       "Only last-hit - do not push the wave forward with extra damage.",
-      "Hold the freeze point (roughly the midpoint between your tower and the enemy's) for 3 full waves.",
+      "Hold the freeze point (near your own tower's threat range, not the lane's midpoint) for 3 full waves.",
       "Note where the freeze breaks and why (a big minion died on the wrong side, you took a harass trade poorly, etc).",
       "Reset and repeat until you can hold a freeze for a full 3-wave cycle without it collapsing."
     ],
