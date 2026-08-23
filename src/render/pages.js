@@ -17,11 +17,11 @@ function footer(docName) {
 
 function documentShell({ title, description, bodyHtml, docName, cardDoc, canonical, noindex }) {
   // canonical/noindex: the print pack's HTML documents are
-  // near-verbatim duplicates of their web-page equivalents, so any print page
-  // that has one gets noindex'd and pointed at that web page as canonical --
-  // keeps both from competing for the same search query. Optional so the
-  // five print documents this pair doesn't apply to (readme, quick-start,
-  // program-guide, warmup-cards, drill-library) are unaffected.
+  // near-verbatim duplicates of their web-page equivalents, so every print
+  // page gets noindex'd and pointed at that web page as canonical -- keeps
+  // both from competing for the same search query. Still an object param
+  // (not required) so a genuinely un-mapped future print document has an
+  // escape hatch, but every current one sets it.
   const canonicalLink = canonical ? `\n<link rel="canonical" href="${escapeHtml(canonical)}">` : '';
   const robotsMeta = noindex ? '\n<meta name="robots" content="noindex">' : '';
   // The print pack (opened on screen as often as it's printed) always
@@ -133,7 +133,11 @@ function renderGuide(guide, benchmarks, focuses, drills) {
     title: 'Solo Queue Practice System - Program Guide',
     description: 'A 30-day deliberate-practice program for League of Legends solo queue: one focus per game, measured, reviewed, and logged.',
     bodyHtml: body,
-    docName: 'Program Guide'
+    docName: 'Program Guide',
+    // program.html covers the same 30-day method as web content -- direct
+    // web equivalent.
+    canonical: absoluteUrl('program.html'),
+    noindex: true
   });
 }
 
@@ -174,7 +178,11 @@ function renderWarmupCards(warmups) {
     description: 'Five one-page, print-ready 15-minute warmup routines for League of Legends, one per role.',
     bodyHtml: body,
     docName: 'Warmup Cards',
-    cardDoc: true
+    cardDoc: true,
+    // warmup.html covers the same five role warmups as web content --
+    // direct web equivalent.
+    canonical: absoluteUrl('warmup.html'),
+    noindex: true
   });
 }
 
@@ -200,7 +208,11 @@ function renderDrillLibrary(drills) {
     description: 'Twelve print-ready practice drills for League of Legends solo queue, each with a pass bar and a progression.',
     bodyHtml: body,
     docName: 'Drill Library',
-    cardDoc: true
+    cardDoc: true,
+    // drills.html covers the same twelve drills as web content -- direct
+    // web equivalent.
+    canonical: absoluteUrl('drills.html'),
+    noindex: true
   });
 }
 
@@ -291,7 +303,12 @@ function renderReadme() {
     title: 'Solo Queue Practice System - README',
     description: 'What is included in the Solo Queue Practice System and the order to use each piece in.',
     bodyHtml: body,
-    docName: 'README'
+    docName: 'README',
+    // No single web page covers the pack's own contents/usage order --
+    // downloads.html is where this pack is actually presented and linked
+    // from, same rationale as the Matchup Study Sheet below.
+    canonical: absoluteUrl('downloads.html'),
+    noindex: true
   });
 }
 
@@ -311,7 +328,12 @@ function renderQuickStart() {
     description: 'The one-page quick-start checklist for the Solo Queue Practice System.',
     bodyHtml: body,
     docName: 'Quick Start',
-    cardDoc: true
+    cardDoc: true,
+    // A condensed extract of the same program.html method (cites Program
+    // Guide sections directly) -- program.html is the honest web
+    // equivalent, same target as the Program Guide print doc itself.
+    canonical: absoluteUrl('program.html'),
+    noindex: true
   });
 }
 

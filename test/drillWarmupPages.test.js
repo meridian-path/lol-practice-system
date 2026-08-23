@@ -110,11 +110,18 @@ test('the matchup study sheet and VOD review sheet print pages carry noindex and
   }
 });
 
-test('every other print document (readme, quick-start, program-guide, warmup-cards, drill-library) is unaffected -- no noindex/canonical added outside this task\'s scope', () => {
+test('the remaining print documents (readme, quick-start, program-guide, warmup-cards, drill-library) also carry noindex and a canonical link to their web equivalent', () => {
   buildPrint();
-  const untouched = ['00-readme.html', '01-quick-start.html', '02-program-guide.html', '03-warmup-cards.html', '04-drill-library.html'];
-  for (const file of untouched) {
+  const cases = [
+    ['00-readme.html', site.absoluteUrl('downloads.html')],
+    ['01-quick-start.html', site.absoluteUrl('program.html')],
+    ['02-program-guide.html', site.absoluteUrl('program.html')],
+    ['03-warmup-cards.html', site.absoluteUrl('warmup.html')],
+    ['04-drill-library.html', site.absoluteUrl('drills.html')]
+  ];
+  for (const [file, expectedCanonical] of cases) {
     const html = fs.readFileSync(path.join(PRINT_DIST, file), 'utf8');
-    assert.ok(!html.includes('noindex'), `${file} unexpectedly carries noindex`);
+    assert.ok(html.includes('<meta name="robots" content="noindex">'), `${file} missing noindex`);
+    assert.ok(html.includes(`<link rel="canonical" href="${expectedCanonical}">`), `${file} missing/incorrect canonical (expected ${expectedCanonical})`);
   }
 });
