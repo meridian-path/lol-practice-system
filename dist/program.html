@@ -933,6 +933,48 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
 .drill-grid .card { margin-bottom: 0; }
 
 /* ---------------------------------------------------------------------------
+   Wave-state lane diagram (wave-management.html) -- a horizontal track with
+   a tower glyph at each end and a minion-dot cluster at the clash point.
+   Colors reuse --accent/--warn (the same pair every other page already
+   uses for "yours" vs. a failure/opposing state) rather than introducing a
+   third color meaning just for this one page.
+   --------------------------------------------------------------------------- */
+.wave-diagram-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin: var(--space-5) 0;
+}
+.wave-diagram {
+  margin: 0 0 var(--space-3) 0;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.wave-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.wave-track { stroke: var(--border); stroke-width: 4; }
+.wave-tower-ally { fill: var(--accent); }
+.wave-tower-enemy { fill: var(--warn); }
+.wave-tower-label {
+  font-family: var(--font-mono);
+  font-size: var(--type-label-size);
+  fill: var(--muted);
+}
+.wave-dot-ally { fill: var(--accent); }
+.wave-dot-enemy { fill: var(--warn); }
+.wave-diagram-caption {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--type-metadata-size);
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------------
    Footer credit line (portfolio-wide, see docs/DESIGN_PLAYBOOK.md's "What
    stays shared across the portfolio") -- kept as its own block, separate
    from the footer rules above, so the two stay independently readable.
@@ -1013,6 +1055,7 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
       <li><a href="/drills.html">The 12 practice-tool drills</a></li>
       <li><a href="/early-game.html">Early Game Fundamentals: your first 15 minutes</a></li>
       <li><a href="/macro-play.html">Macro Play and Win Condition Identification</a></li>
+      <li><a href="/wave-management.html">Wave Management: freeze, slow push, fast push</a></li>
       <li><a href="/tracker.html">Get the free tracker spreadsheet</a></li>
       <li><a href="/downloads.html">Download the full printable pack</a></li>
       </ul>
