@@ -50,10 +50,10 @@ function standardEndLinks(extra = []) {
 
 function renderFirstBackChecklist() {
   const items = [
-    'You are recalling with a wave banked (a minion wave about to reach you or already pushed to your tower), not walking away from gold on the ground.',
-    'You have priced out your next item before you recall, not after landing back in lane.',
-    'Your gold covers a completed component or a full item, not a partial that leaves you weaker in the next trade than before you left.',
-    'You checked the enemy jungler’s last-seen location before committing to the walk back, not just before the recall itself.'
+    'The wave is banked - about to reach you, or already pushed into your tower - so recalling now doesn’t leave gold sitting on the ground.',
+    'You already know what you’re buying before you recall, rather than pricing it out once you’re back in lane.',
+    'Your gold covers a completed component or a full item; a partial buy leaves you weaker in the next trade than before you left.',
+    'You checked the enemy jungler’s last-seen location before committing to the walk back - checking it the instant you hit recall is too late to change your path.'
   ];
   return `<div class="vod-checklist">${items.map(checklistRow).join('\n')}</div>`;
 }
@@ -108,43 +108,43 @@ function renderEarlyGame() {
 
   const firstBackSection = `<section class="guide-section">
     <h2>First Back Timing and Item Priority</h2>
-    <p>The most common early-game leak is not a bad trade - it's a bad recall. Recalling too early wastes travel time and a wave; recalling too late means playing several minions down while an opponent who timed theirs correctly gets a head start on the next power spike.</p>
-    <p>The rule that actually works in practice: recall when the wave you're standing next to is already pushing toward your own tower and you can't get meaningful value staying for it. Don't recall on a fixed clock - recall on wave state.</p>
-    <p>Item priority follows the same logic as everything else in this program: buy what closes the specific gap your baseline showed, not what a build guide lists first. A lane that's losing trades needs defensive stats before offense; a lane that's winning trades needs to close out the kill threshold on its next spike.</p>
+    <p>Recall timing costs more games than bad trades do. Recall too early and you waste travel time and a wave; recall too late and you play several minions down while an opponent who timed theirs correctly gets a head start on the next power spike.</p>
+    <p>The rule that actually works: recall once the wave you're standing next to is already pushing toward your own tower and staying any longer gets you nothing more. Time the recall to wave state, not to a fixed clock.</p>
+    <p>Item priority follows the same logic as everything else in this program: buy toward the specific gap your baseline showed, rather than defaulting to whatever a build guide lists first. A losing lane needs defensive stats before offense; a winning lane needs to close out the kill threshold on its next spike.</p>
     ${renderFirstBackChecklist()}
-    <p>This is exactly what ${focusLink('recall-efficiency')} measures - if your low-value recall count is high, this is the first thing to fix.</p>
+    <p>This is exactly what ${focusLink('recall-efficiency')} measures - if your low-value recall count is high, start here.</p>
   </section>`;
 
   const powerSpikeSection = `<section class="guide-section">
     <h2>Level 2 and 3 Power Spikes</h2>
-    <p>Level 2 arrives the moment either laner lands a third ability point - usually from the first minion wave crashing. Whoever hits level 2 first, and recognizes it first, gets a short window where a full combo wins a trade the opponent can't yet answer. Losing that window because you weren't tracking XP is a free trade given away for nothing.</p>
-    <p>Level 3 works the same way but compounds: it's the first point most kits get real access to their full three-ability combo, which is also usually the point an all-in becomes threatening instead of just a poke trade. Track your own XP bar, not just your opponent's health bar - the spike is what makes the trade favorable, not the other way around.</p>
-    <p>Jungle role reads this differently: a jungler's first clear puts them at level 3 or 4 by the time they reach a lane, which is exactly why a gank timed to a laner's own level 2 spike is so much stronger than one timed to nothing in particular.</p>
+    <p>Level 2 arrives the moment either laner lands their second ability point, usually off the first minion wave crashing. Whoever hits it first, and notices first, gets a short window where a two-ability combo wins a trade the opponent - still down to one ability - can't yet answer. Miss that window because you weren't tracking XP, and it's a free trade handed away.</p>
+    <p>Level 3 compounds the same idea: it's usually the first point a kit has real access to its full three-ability combo, and the point an all-in starts to threaten rather than just a poke trade. Track your own XP bar as closely as your opponent's health bar - the spike is what makes a trade favorable, not the health total.</p>
+    <p>For junglers this reads differently: a jungler's first clear puts them at level 3 or 4 by the time they reach a lane, which is exactly why a gank timed to a laner's own level 2 spike lands so much harder than one timed to nothing in particular.</p>
   </section>`;
 
   const winConditionSection = `<section class="guide-section">
     <h2>Identifying Your Win Condition Early</h2>
-    <p>By the ten-minute mark, the game is usually already telling you which of three shapes it wants to take. Reading this early - instead of only realizing it in a 25-minute post-game replay - is what turns a lane lead into a game win instead of a wasted head start.</p>
+    <p>By the ten-minute mark, the game is usually already telling you which of three shapes it wants to take. Read it now, in game, and a lane lead turns into a game win; wait until the post-game replay to figure it out, and that same lead usually gets wasted.</p>
     ${renderWinConditionTable()}
-    <p>Getting this read right, then acting on it every game, is the whole difference between "playing well" and "playing to win" - see ${focusLink('objective-awareness')} for how this connects to mid-game macro decisions once the early window closes.</p>
+    <p>Getting this read right, then actually acting on it every game, is what separates playing well from playing to win. See ${focusLink('objective-awareness')} for how this connects to the macro decisions once the early window closes.</p>
   </section>`;
 
   const mistakesSection = `<section class="guide-section">
     <h2>Common Early Game Mistakes by Role and Rank</h2>
-    <p>The specific mistake changes by rank, but the shape doesn't: lower ranks lose the early game mechanically (a missed trade, a bad clear order), higher ranks lose it structurally (a wave held too long, a roam with no setup). Neither is really about mechanics once you're past the fundamentals - both are about reading the game state before you commit.</p>
+    <p>The specific mistake changes by rank, but the shape holds: lower ranks lose the early game mechanically - a missed trade, a bad clear order - while higher ranks lose it structurally, through a wave held too long or a roam with no setup. Past the fundamentals, both come down to reading the game state before you commit to anything.</p>
     ${renderRoleMistakeTable()}
-    ${callout('If your own mistake isn’t on this table, that’s fine - the table is a starting list, not a diagnosis. Your own VOD review will find your specific repeat mistake faster than any generic list can.')}
+    ${callout('If your own mistake isn’t on this table, that’s fine - this is a starting point. Your own VOD review will find your specific repeat mistake faster than any generic list can.')}
   </section>`;
 
   const focusIntegrationSection = `<section class="guide-section">
     <h2>How This Ties Into the 12 Focuses</h2>
-    <p>Nothing on this page is a new system on top of the program - it's the early-game context for three focuses you may already be holding:</p>
+    <p>Everything on this page maps back to the program's existing focuses. Three in particular get their early-game context filled in here:</p>
     <ul>
-      <li>${focusLink('trade-discipline')} - the level 2/3 spike section above is exactly when a "favorable trade, then leave" decision gets made or missed.</li>
+      <li>${focusLink('trade-discipline')} - the level 2/3 spike section above is exactly when a favorable trade, then a clean disengage, gets made or missed.</li>
       <li>${focusLink('cs-per-min')} - first-back timing is the single biggest lever on your early CS/min, since a mistimed recall costs an entire wave.</li>
-      <li>${focusLink('vision-cadence')} - the win-condition table above depends on knowing where the enemy jungler is, which is a vision-cadence problem before it's a decision-making one.</li>
+      <li>${focusLink('vision-cadence')} - the win-condition table above starts with knowing where the enemy jungler is; you can't read a win condition you can't see.</li>
     </ul>
-    <p>If you haven't picked a focus yet, start at the <a href="${escapeHtml(site.url('focus-menu.html'))}">Focus Menu</a> and pick the one your baseline shows is weakest - this page is context for whichever one you land on, not a replacement for holding one at a time.</p>
+    <p>Haven't picked a focus yet? Start at the <a href="${escapeHtml(site.url('focus-menu.html'))}">Focus Menu</a> and pick whichever one your baseline shows is weakest. This page adds context once you're there; it doesn't change the rule of holding one focus at a time.</p>
   </section>`;
 
   const sectionsHtml = `${firstBackSection}
