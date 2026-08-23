@@ -198,7 +198,12 @@ function renderProgram() {
       [site.url('drills.html'), 'The 12 practice-tool drills'],
       [site.url('early-game.html'), 'Early Game Fundamentals: your first 15 minutes'],
       [site.url('macro-play.html'), 'Macro Play and Win Condition Identification'],
-      [site.url('wave-management.html'), 'Wave Management: freeze, slow push, fast push']
+      [site.url('wave-management.html'), 'Wave Management: freeze, slow push, fast push'],
+      [site.url('climbing-top.html'), 'Top Lane Climbing Guide'],
+      [site.url('climbing-jungle.html'), 'Jungle Climbing Guide'],
+      [site.url('climbing-mid.html'), 'Mid Lane Climbing Guide'],
+      [site.url('climbing-adc.html'), 'ADC Climbing Guide'],
+      [site.url('climbing-support.html'), 'Support Climbing Guide']
     ])
   });
 }
@@ -247,7 +252,12 @@ function renderFocusMenu() {
       [site.url('baseline.html'), 'Read your baseline first'],
       [site.url('early-game.html'), 'Early Game Fundamentals: your first 15 minutes'],
       [site.url('macro-play.html'), 'Macro Play and Win Condition Identification'],
-      [site.url('wave-management.html'), 'Wave Management: freeze, slow push, fast push']
+      [site.url('wave-management.html'), 'Wave Management: freeze, slow push, fast push'],
+      [site.url('climbing-top.html'), 'Top Lane Climbing Guide'],
+      [site.url('climbing-jungle.html'), 'Jungle Climbing Guide'],
+      [site.url('climbing-mid.html'), 'Mid Lane Climbing Guide'],
+      [site.url('climbing-adc.html'), 'ADC Climbing Guide'],
+      [site.url('climbing-support.html'), 'Support Climbing Guide']
     ])
   });
 }
