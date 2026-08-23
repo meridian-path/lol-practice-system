@@ -168,7 +168,9 @@ const TOP = {
   endLinks: [
     [site.url('drills.html#wave-freeze-setup'), 'Run the Wave-Freeze Setup drill'],
     [site.url('drills.html#trade-then-back'), 'Run the Trade-Then-Back Pattern drill'],
-    [site.url('focus-menu.html'), 'See the full Focus Menu']
+    [site.url('focus-menu.html'), 'See the full Focus Menu'],
+    [site.url('wave-management.html'), 'Wave Management, the mechanic behind this page\'s freeze/slow-push control'],
+    [site.url('macro-play.html'), 'Macro Play and Win Condition, for the split-push read at Plat+']
   ]
 };
 
@@ -203,7 +205,9 @@ const JUNGLE = {
   endLinks: [
     [site.url('drills.html#jungle-clear-timing'), 'Run the Jungle Clear Timing drill'],
     [site.url('drills.html#objective-timer-precall'), 'Run the Objective-Timer Pre-Call drill'],
-    [site.url('focus-menu.html'), 'See the full Focus Menu']
+    [site.url('focus-menu.html'), 'See the full Focus Menu'],
+    [site.url('macro-play.html'), 'Objective priority and win conditions, mapped out in full: Macro Play'],
+    [site.url('early-game.html'), 'What the early clear and first ganks are actually setting up: Early Game Fundamentals']
   ]
 };
 
@@ -238,7 +242,9 @@ const MID = {
   endLinks: [
     [site.url('drills.html#wave-freeze-setup'), 'Run the Wave-Freeze Setup drill'],
     [site.url('drills.html#objective-timer-precall'), 'Run the Objective-Timer Pre-Call drill'],
-    [site.url('focus-menu.html'), 'See the full Focus Menu']
+    [site.url('focus-menu.html'), 'See the full Focus Menu'],
+    [site.url('wave-management.html'), 'The push-to-roam, freeze-to-deny mechanic in full: Wave Management'],
+    [site.url('macro-play.html'), 'Timing a roam to the wider game: Macro Play and Win Condition']
   ]
 };
 
@@ -273,7 +279,9 @@ const ADC = {
   endLinks: [
     [site.url('drills.html#last-hit-under-tower'), 'Run the Last-Hit Under Tower drill'],
     [site.url('drills.html#cs-10min'), 'Run the 10-Minute CS Drill'],
-    [site.url('focus-menu.html'), 'See the full Focus Menu']
+    [site.url('focus-menu.html'), 'See the full Focus Menu'],
+    [site.url('early-game.html'), 'The first-back and power-spike timing that sets up your own early lane: Early Game Fundamentals'],
+    [site.url('wave-management.html'), 'Reading the freeze the enemy laner is holding against you: Wave Management']
   ]
 };
 
@@ -308,7 +316,9 @@ const SUPPORT = {
   endLinks: [
     [site.url('drills.html#ward-clock'), 'Run the Ward Clock drill'],
     [site.url('drills.html#no-flame-comms'), 'Run the No-Flame Comms drill'],
-    [site.url('focus-menu.html'), 'See the full Focus Menu']
+    [site.url('focus-menu.html'), 'See the full Focus Menu'],
+    [site.url('macro-play.html'), 'Objective priority by game state, the read this page\'s vision coverage feeds: Macro Play'],
+    [site.url('early-game.html'), 'Engage timing starts with the same first-15-minutes read: Early Game Fundamentals']
   ]
 };
 

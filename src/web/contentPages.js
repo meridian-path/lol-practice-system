@@ -196,6 +196,9 @@ function renderProgram() {
       [site.url('focus-menu.html'), 'Pick your first focus from the Focus Menu'],
       [site.url('warmup.html'), 'Warmup routines by role'],
       [site.url('drills.html'), 'The 12 practice-tool drills'],
+      [site.url('champion-pool.html'), 'Build a champion pool that supports the program'],
+      [site.url('vod-review.html'), 'Review your own replays in 12 minutes'],
+      [site.url('tilt-rules.html'), 'Tilt and stop rules for a session'],
       [site.url('early-game.html'), 'Early Game Fundamentals: your first 15 minutes'],
       [site.url('macro-play.html'), 'Macro Play and Win Condition Identification'],
       [site.url('wave-management.html'), 'Wave Management: freeze, slow push, fast push'],
@@ -275,7 +278,8 @@ function renderChampionPool() {
     introHtml,
     sectionsHtml: renderSectionsWithMidAd(['a7-champion-pool-setup']),
     endLinksHtml: standardEndLinks([
-      [site.url('program.html'), 'Back to the 30-day program']
+      [site.url('program.html'), 'Back to the 30-day program'],
+      [site.url('focus-menu.html'), 'Pick a focus first, then size the pool around it']
     ])
   });
 }
@@ -301,7 +305,9 @@ function renderVodReview() {
     introHtml,
     sectionsHtml,
     endLinksHtml: standardEndLinks([
-      [site.url('print/07-vod-review-sheet.html'), 'Print the blank VOD Review Sheet']
+      [site.url('print/07-vod-review-sheet.html'), 'Print the blank VOD Review Sheet'],
+      [site.url('focus-menu.html#lesson-extraction'), 'Post-Game Lesson Extraction, the focus this checklist trains'],
+      [site.url('program.html'), 'Back to the 30-day program']
     ])
   });
 }
@@ -319,7 +325,8 @@ function renderTiltRules() {
     introHtml,
     sectionsHtml: renderSectionsWithMidAd(['a9-tilt-and-stop-rules']),
     endLinksHtml: standardEndLinks([
-      [site.url('program.html'), 'Back to the 30-day program']
+      [site.url('program.html'), 'Back to the 30-day program'],
+      [site.url('focus-menu.html#death-cause'), 'Death Cause Control, for the pattern behind most tilt spirals']
     ])
   });
 }
@@ -359,7 +366,8 @@ function renderFaq() {
     introHtml,
     sectionsHtml: renderSectionsWithMidAd(['a11-faq']),
     endLinksHtml: standardEndLinks([
-      [site.url('program.html'), 'Read the full program']
+      [site.url('program.html'), 'Read the full program'],
+      [site.url('focus-menu.html'), 'See the full Focus Menu']
     ]),
     jsonLd: faqPageJsonLd(extractFaqPairs())
   });
