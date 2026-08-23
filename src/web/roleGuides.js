@@ -153,7 +153,7 @@ const TOP = {
     { band: 'Gold-Plat', goal: 'Use Teleport as a map tool, not just a recall shortcut.', blocker: 'TP gets tracked only for personal recalls, never against the enemy top laner\'s own TP cooldown.' },
     { band: 'Plat+', goal: 'Threaten a split push hard enough that the enemy has to send two players to answer it.', blocker: 'The threat itself is real, but the exact moment to commit to the split versus group with the team is still misread.' }
   ],
-  mistakesIntroHtml: 'Two mistakes repeat across almost every top laner\'s climb - one in the laning phase, one once Teleport and side-lane pressure enter the picture.',
+  mistakesIntroHtml: 'Top lane rank tends to stall on two specific habits: a laning-phase read that never quite solidifies, and a second one that only shows up once Teleport and side-lane pressure enter the picture.',
   mistakes: [
     { phase: 'Laning Phase', ironBronze: 'Pushing the wave to the enemy tower for no reason, handing CS to tower aggro and losing freeze control.', goldPlat: 'Holding a freeze correctly but missing the power-spike window to actually cash it in on a trade.' },
     { phase: 'Mid/Late Game', ironBronze: 'Split-pushing alone with Teleport on cooldown, dying to a rotation with no way to answer it.', goldPlat: 'Holding the side lane too long after a teamfight has already started elsewhere, arriving too late to matter.' }
@@ -188,7 +188,7 @@ const JUNGLE = {
     { band: 'Gold-Plat', goal: 'Win contested scuttle crabs and early Dragons through vision and timing.', blocker: 'Objective vision gets placed reactively, after the enemy jungler is already spotted near the pit, instead of before.' },
     { band: 'Plat+', goal: 'Control tempo across the whole map - path toward whichever objective actually swings the game.', blocker: 'Pathing still optimizes for personal farm efficiency over the read on which objective matters most right now.' }
   ],
-  mistakesIntroHtml: 'Two mistakes repeat across almost every jungler\'s climb - one about lane selection, one about objectives.',
+  mistakesIntroHtml: 'Ask what actually holds junglers back and the answer is almost always one of two things: which lane got picked for a gank, or how an objective got played.',
   mistakes: [
     { phase: 'Early Clears/Ganks', ironBronze: 'Dying to an invade because the enemy jungler\'s starting side was never tracked.', goldPlat: 'Ganking a lane that\'s already losing instead of reinforcing the lane that\'s already ahead.' },
     { phase: 'Objectives', ironBronze: 'Contesting Dragon or Herald with zero vision on the pit, fighting blind into a numbers disadvantage.', goldPlat: 'Clearing one more camp instead of taking a free, uncontested objective that was already lined up.' }
@@ -199,7 +199,7 @@ const JUNGLE = {
     ['objective-awareness', 'calling and acting on Dragon/Herald timers before they spawn is exactly the objective read described above.'],
     ['minimap-awareness', 'tracking the enemy jungler\'s position is what turns "gank the lane that\'s ahead" from a guess into an actual read.']
   ],
-  closerHtml: 'New to the program? The <a href="' + '__FOCUS_MENU__' + '">Focus Menu</a> is where every focus lives - start with whichever one your own baseline shows is weakest, jungle-specific or not.',
+  closerHtml: 'If none of the twelve focuses are picked yet, the <a href="' + '__FOCUS_MENU__' + '">Focus Menu</a> is where that decision actually gets made - start with whichever one the baseline flags as weakest, jungle-specific or not, and treat this page as the jungle lens on it.',
   endLinks: [
     [site.url('drills.html#jungle-clear-timing'), 'Run the Jungle Clear Timing drill'],
     [site.url('drills.html#objective-timer-precall'), 'Run the Objective-Timer Pre-Call drill'],
@@ -223,7 +223,7 @@ const MID = {
     { band: 'Gold-Plat', goal: 'Time roams to jungler objective timers instead of to whenever a kill looks tempting.', blocker: 'Roams still get triggered by a flashy opportunity rather than a Herald or Dragon timer.' },
     { band: 'Plat+', goal: 'Use mid\'s central position to influence both side lanes and river vision at once.', blocker: 'Map influence is understood conceptually, but the moment-to-moment choice of where to apply it still lags the read.' }
   ],
-  mistakesIntroHtml: 'Two mistakes repeat across almost every mid laner\'s climb - one about survival, one about roam timing.',
+  mistakesIntroHtml: 'Mid lane rank stalls on the same two habits at almost every level: surviving lane long enough for the rest of the kit to matter, and timing a roam once it\'s actually safe to leave.',
   mistakes: [
     { phase: 'Laning Phase', ironBronze: 'Overextending past the minion wave with no river vision, dying to a fully telegraphed gank.', goldPlat: 'Roaming the instant a kill looks available, missing that the wave was about to crash into the friendly tower.' },
     { phase: 'Roam Timing', ironBronze: 'Never leaving lane at all, even when wave state and jungler position both say the roam is free.', goldPlat: 'Roaming to a lane that doesn\'t need the help instead of the one an objective timer actually calls for.' }
@@ -234,7 +234,7 @@ const MID = {
     ['objective-awareness', 'timing a roam to a Herald or Dragon spawn instead of to a stray kill opportunity is this focus, applied to mid specifically.'],
     ['vision-cadence', 'the river vision that keeps you alive in lane is the same habit that lets you see a roam window before it closes.']
   ],
-  closerHtml: 'Haven\'t picked a focus yet? Head to the <a href="' + '__FOCUS_MENU__' + '">Focus Menu</a> and let your own baseline decide which one - this page is context for whichever focus you land on, not a replacement for it.',
+  closerHtml: 'Run the baseline first if a focus isn\'t locked in yet - the <a href="' + '__FOCUS_MENU__' + '">Focus Menu</a> will show which of the twelve is weakest, and this page becomes the mid-specific detail for whichever one that turns out to be.',
   endLinks: [
     [site.url('drills.html#wave-freeze-setup'), 'Run the Wave-Freeze Setup drill'],
     [site.url('drills.html#objective-timer-precall'), 'Run the Objective-Timer Pre-Call drill'],
@@ -258,7 +258,7 @@ const ADC = {
     { band: 'Gold-Plat', goal: 'Itemize for the specific threat that\'s actually killing you, not a generic build order.', blocker: 'Item choices follow a build guide\'s default order regardless of which enemy champion is dealing the damage.' },
     { band: 'Plat+', goal: 'Hold teamfight positioning under focus fire without giving up damage output.', blocker: 'Positioning is correct at the start of a fight but drifts forward as the fight goes on, chasing one more auto.' }
   ],
-  mistakesIntroHtml: 'Two mistakes repeat across almost every ADC\'s climb - one in lane, one in fights.',
+  mistakesIntroHtml: 'For ADC, the pattern holding back most climbs shows up in two different phases of the game: how lane gets played under pressure, and how fights get positioned once it ends.',
   mistakes: [
     { phase: 'Laning Phase', ironBronze: 'Attack-moving into range without checking whether the enemy support\'s engage tool is up.', goldPlat: 'Losing CS to a freeze the enemy is holding instead of matching their wave management.' },
     { phase: 'Teamfights', ironBronze: 'Standing in the front line on instinct instead of positioning behind the tank or bruiser line.', goldPlat: 'Taking one more auto-attack in a fight that\'s already lost, dying for damage that no longer changes the outcome.' }
@@ -293,7 +293,7 @@ const SUPPORT = {
     { band: 'Gold-Plat', goal: 'Extend vision to cover objective timers, not just the lane itself.', blocker: 'Vision stays lane-focused even after the game\'s priority has already shifted to a Dragon or Herald timer.' },
     { band: 'Plat+', goal: 'Shotcall objective setups and roam windows without losing bot lane\'s own priority.', blocker: 'Roaming off lane still costs more tempo than it buys, because the lane isn\'t left in a safe wave state first.' }
   ],
-  mistakesIntroHtml: 'Two mistakes repeat across almost every support\'s climb - one about vision, one about roaming.',
+  mistakesIntroHtml: 'Support rank usually comes down to two habits: how vision gets placed, and what happens the moment a roam leaves the lane uncovered.',
   mistakes: [
     { phase: 'Laning Phase', ironBronze: 'Warding on a fixed timer regardless of what the lane state or jungler timer actually calls for.', goldPlat: 'Landing the engage but not following it up, letting the ADC\'s kill window close unused.' },
     { phase: 'Mid Game', ironBronze: 'Trading trinket-only vision for wards, leaving deep river or objective vision uncovered.', goldPlat: 'Roaming off lane without telling the ADC, leaving them exposed to a call they never saw coming.' }
