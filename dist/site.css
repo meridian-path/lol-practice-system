@@ -899,9 +899,9 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
 .drill-grid .card { margin-bottom: 0; }
 
 /* ---------------------------------------------------------------------------
-   Footer credit line (portfolio-wide, see docs/DESIGN_PLAYBOOK.md's "What
-   stays shared across the portfolio") -- kept as its own block, separate
-   from the footer rules above, so the two stay independently readable.
+   Footer credit line, shared across all sites in this portfolio -- kept as
+   its own block, separate from the footer rules above, so the two stay
+   independently readable.
    --------------------------------------------------------------------------- */
 .site-footer .footer-credit {
   margin-top: var(--space-3);
