@@ -260,7 +260,7 @@ const SOCIAL_ICON_SVG = '<svg width="18" height="18" viewBox="0 0 100 100" xmlns
  * guarantee below is unaffected.
  */
 function renderFooterCredit() {
-  return `<p class="footer-credit">Built by Dylan - also making <a href="https://repertoire-builder.com" rel="noopener noreferrer">Repertoire Builder</a> and <a href="https://dylangerloski.github.io/filetools/" rel="noopener noreferrer">filetools</a>. <a class="footer-social" href="https://x.com/builtittheycome" rel="noopener noreferrer">${SOCIAL_ICON_SVG}Follow @builtittheycome</a></p>`;
+  return `<p class="footer-credit">Built by Dylan - also making <a href="https://repertoire-builder.com" rel="noopener noreferrer">Repertoire Builder</a> and <a href="https://usefiletools.com" rel="noopener noreferrer">filetools</a>. <a class="footer-social" href="https://x.com/builtittheycome" rel="noopener noreferrer">${SOCIAL_ICON_SVG}Follow @builtittheycome</a></p>`;
 }
 
 /**

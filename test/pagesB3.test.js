@@ -75,12 +75,13 @@ test('about.html carries the full Riot disclaimer and trademark notice in its ow
   assert.ok(!content.includes('Meridian Path Media'), 'about.html must never use the business-entity contact identity');
 });
 
-test('about.html carries the real personal contact email as a mailto link, not a placeholder', () => {
+test('about.html carries the project contact email as a mailto link, not a placeholder', () => {
   buildSite();
   const content = readDist('about.html');
   assert.ok(!/no public contact address/i.test(content), 'about.html should no longer show the not-yet-supplied contact placeholder notice now that a real address is wired in');
-  assert.ok(content.includes('mailto:dylanger2525@gmail.com'), 'expected a mailto link to the real contact address');
-  assert.ok(content.includes('dylanger2525@gmail.com'), 'expected the real contact email to appear in the rendered page');
+  assert.ok(content.includes('mailto:ops@meridianpath.media'), 'expected a mailto link to the real contact address');
+  assert.ok(content.includes('ops@meridianpath.media'), 'expected the real contact email to appear in the rendered page');
+  assert.ok(!content.includes('dylanger2525@gmail.com'), 'about.html must never expose the personal contact email');
 });
 
 test('about.html carries no internal task/decision ids or process vocabulary in its rendered output', () => {

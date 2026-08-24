@@ -26,7 +26,7 @@ const warmups = require(path.join('..', '..', 'content', 'warmups.json'));
 const { RIOT_DISCLAIMER, TRADEMARK_NOTICE } = site;
 
 // Real public contact address for this project.
-const CONTACT_EMAIL = 'dylanger2525@gmail.com';
+const CONTACT_EMAIL = 'ops@meridianpath.media';
 
 const PRINT_DIR = path.join(__dirname, '..', '..', 'dist', 'print');
 

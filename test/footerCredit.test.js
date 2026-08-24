@@ -9,7 +9,8 @@ test('renderFooter carries the portfolio-wide credit line naming the operator an
   const footer = renderFooter();
   assert.match(footer, /Built by Dylan/);
   assert.match(footer, /also making <a href="https:\/\/repertoire-builder\.com"[^>]*>Repertoire Builder<\/a>/);
-  assert.match(footer, /<a href="https:\/\/dylangerloski\.github\.io\/filetools\/"[^>]*>filetools<\/a>/);
+  assert.match(footer, /<a href="https:\/\/usefiletools\.com"[^>]*>filetools<\/a>/);
+  assert.doesNotMatch(footer, /dylangerloski/i, 'footer must never link to the stale personal GitHub Pages URL');
 });
 
 test('renderFooter links the social handle to the shared X profile with rel="noopener noreferrer"', () => {
