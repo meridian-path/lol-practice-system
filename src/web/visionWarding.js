@@ -70,7 +70,7 @@ function renderRhythmSection() {
 function renderDenialSection() {
   return `<section class="guide-section">
     <h2>Vision Denial: The Half Most Players Skip</h2>
-    <p>Placing wards is half of vision play. Clearing the enemy's wards is the other half, and it gets skipped far more often, because a cleared ward does not show up anywhere on your own scoreboard the way a placed one does. A control ward you place removes one enemy ward on sight and denies that spot for its full duration - both effects matter, not just the vision it grants you.</p>
+    <p>Placing wards is half of vision play. Clearing the enemy's wards is the other half, and it gets skipped far more often, because a cleared ward does not show up anywhere on your own scoreboard the way a placed one does. A control ward you place does three things at once: it grants vision, it removes one enemy ward on sight, and it denies that spot for its full duration.</p>
     <p>Sweeping before a contested play is not optional prep, it is the play itself: walking into an objective fight or a dive with the enemy still holding vision on your approach is the same mistake as walking in with no vision of your own, just from the other direction. Treat a known enemy ward spot the same way you would treat a known enemy cooldown - something to check and account for before you commit, not something to discover mid-fight.</p>
   </section>`;
 }
@@ -80,7 +80,7 @@ function renderRoleSection() {
     <h2>Vision Responsibility By Role</h2>
     <p>Every role benefits from vision, but the load is not shared evenly, and expecting an even split is its own common mistake.</p>
     <ul>
-      <li><strong>Support:</strong> carries the largest share by default - lane vision, then river and objective vision as the game moves past laning phase. This is close to a full-time job, not something fit in between other tasks.</li>
+      <li><strong>Support:</strong> carries the largest share by default - lane vision, then river and objective vision as the game moves past laning phase. This is close to a full-time job that deserves dedicated attention through the rest of the game.</li>
       <li><strong>Jungle:</strong> owns vision around your own jungle entrances and contested objective pits specifically, since a jungler with no vision on their own camps is the easiest gank target on the map.</li>
       <li><strong>Mid:</strong> river vision is a laning-phase survival tool first, an information tool second - the same ward that shows an incoming gank also shows whether a roam window is actually open.</li>
       <li><strong>Top:</strong> the most isolated lane, so a single well-placed ward on the jungle entrance you are most vulnerable from often has to cover for the entire lane phase.</li>
