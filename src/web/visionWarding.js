@@ -53,7 +53,7 @@ function standardEndLinks(extra = []) {
 function renderVisionToolsSection() {
   return `<section class="guide-section">
     <h2>What a Ward Actually Buys You</h2>
-    <p>A ward's value is not the vision score number it adds - it is the specific decision it lets you make safely that you could not make blind. Every vision tool on the map does one of two jobs: it either watches a path something has to walk through, or it watches a spot something has to stand still in to take (a jungle camp, an objective pit, a recall). Placing a ward that does neither is the most common way to raise vision score without actually buying any safety.</p>
+    <p>A ward's real value is the specific decision it lets you make safely that you could not make blind, not the vision score number it adds. Every vision tool on the map does one of two jobs: it either watches a path something has to walk through, or it watches a spot something has to stand still in to take (a jungle camp, an objective pit, a recall). Placing a ward that does neither is the most common way to raise vision score without actually buying any safety.</p>
     <p>Your trinket ward and purchased Control Wards do the same underlying job with different tradeoffs: the trinket is free and always available on a cooldown, so it is what you use to keep a baseline of coverage running; a Control Ward costs real gold and lasts far longer, and it also removes an existing enemy ward in the spot where you place it, so it is what you use for a spot you specifically need to hold, not refresh out of habit. The map's known high-traffic choke points - river crossings, jungle entrances, objective pits - are worth more per ward than an open lane, because more of the enemy's possible paths run through them.</p>
   </section>`;
 }
@@ -71,7 +71,7 @@ function renderDenialSection() {
   return `<section class="guide-section">
     <h2>Vision Denial: The Half Most Players Skip</h2>
     <p>Placing wards is half of vision play. Clearing the enemy's wards is the other half, and it gets skipped far more often, because a cleared ward does not show up anywhere on your own scoreboard the way a placed one does. A control ward you place does three things at once: it grants vision, it removes one enemy ward on sight, and it denies that spot for its full duration.</p>
-    <p>Sweeping before a contested play is not optional prep, it is the play itself: walking into an objective fight or a dive with the enemy still holding vision on your approach is the same mistake as walking in with no vision of your own, just from the other direction. Treat a known enemy ward spot the same way you would treat a known enemy cooldown - something to check and account for before you commit, not something to discover mid-fight.</p>
+    <p>Sweeping before a contested play is part of the play itself, not optional prep beforehand - walking into an objective fight or a dive with the enemy still holding vision on your approach is the same mistake as walking in with no vision of your own, just from the other direction. Treat a known enemy ward spot the same way you would treat a known enemy cooldown - something to check and account for before you commit, not something to discover mid-fight.</p>
   </section>`;
 }
 
