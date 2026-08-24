@@ -33,6 +33,7 @@ const { renderEarlyGame } = require('./earlyGame.js');
 const { renderMacroPlay } = require('./macroPlay.js');
 const { renderWaveManagement } = require('./waveManagement.js');
 const { renderVisionWarding } = require('./visionWarding.js');
+const { renderTeamfighting } = require('./teamfighting.js');
 // climbing-{role}.html -- 5 standalone content-gap pages, one per role.
 const {
   renderTopGuide,
@@ -138,6 +139,7 @@ const WEB_PAGES = [
   ['macro-play.html', renderMacroPlay],
   ['wave-management.html', renderWaveManagement],
   ['vision.html', renderVisionWarding],
+  ['teamfighting.html', renderTeamfighting],
   ['climbing-top.html', renderTopGuide],
   ['climbing-jungle.html', renderJungleGuide],
   ['climbing-mid.html', renderMidGuide],
