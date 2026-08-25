@@ -144,7 +144,8 @@ function renderObjectiveControl() {
     ${standardEndLinks([
       [site.url('drills.html#objective-timer-precall'), 'Run the Objective-Timer Pre-Call drill'],
       [site.url('focus-menu.html'), 'See the full Focus Menu'],
-      [site.url('macro-play.html'), 'Deciding which objective is worth taking: Macro Play and Win Condition Identification']
+      [site.url('macro-play.html'), 'Deciding which objective is worth taking: Macro Play and Win Condition Identification'],
+      [site.url('comms.html'), 'Turning the timer into a team-wide call: Shot-Calling and Comms']
     ])}
   </div>`;
 
