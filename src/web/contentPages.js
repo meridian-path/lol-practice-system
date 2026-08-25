@@ -342,6 +342,7 @@ function renderVodReview() {
     file: 'vod-review.html',
     titleBase: 'Review Your Replays in 12 Minutes',
     description: 'A 4-checkpoint method for reviewing your own League of Legends replays in about twelve minutes, with a printable checklist.',
+    active: 'vod-review',
     introHtml,
     sectionsHtml,
     endLinksHtml: standardEndLinks([
@@ -362,6 +363,7 @@ function renderTiltRules() {
     file: 'tilt-rules.html',
     titleBase: 'Tilt and Stop Rules',
     description: 'Pre-committed stop rules for League of Legends solo queue: the two-loss rule, a breathing reset, and why logging before closing the client matters.',
+    active: 'tilt-rules',
     introHtml,
     sectionsHtml: renderSectionsWithMidAd(['a9-tilt-and-stop-rules']),
     endLinksHtml: standardEndLinks([
