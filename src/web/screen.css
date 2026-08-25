@@ -436,6 +436,68 @@ main.page-shell {
 .feature-card h3 { margin: 0 0 var(--space-2); }
 .feature-card p { margin: 0; color: var(--muted); }
 
+/* Start Here routing quiz (index.html, task-mt83rhrh-759f27 item 1) -- a
+   simple 3-field form, self-contained rather than reusing tracker.html's
+   own form styling (a separate, larger feature built in parallel) to avoid
+   a cross-branch class dependency. */
+.quiz-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+@media (min-width: 640px) {
+  .quiz-form { grid-template-columns: repeat(3, 1fr); }
+}
+.quiz-form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 0.9em;
+}
+.quiz-form select {
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+
+/* .feature-grid's own `display: grid` (an author-stylesheet rule) beats the
+   browser's default `[hidden] { display: none }` UA-stylesheet rule, so the
+   quiz results panel's `hidden` attribute alone does not actually hide it -
+   a real bug caught by a real headless-browser check during this build, not
+   by npm test (nothing in the committed suite drives real DOM/CSS layout).
+   This scoped override (higher specificity than plain .feature-grid, so it
+   wins regardless of source order) is the fix, not a global `[hidden]`
+   rule, since only this one grid on the page ever gets toggled hidden. */
+.feature-grid[hidden] { display: none; }
+
+/* Visually identical to .feature-card, kept as a distinct class rather than
+   reused directly -- an existing test asserts exactly 3 .feature-card
+   elements on the home page (the "Start here" section's own count), and
+   this quiz result panel adds up to 3 more. */
+.quiz-result-card {
+  display: block;
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent-rule);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color var(--motion-duration-fast) var(--motion-ease-standard);
+}
+.quiz-result-card:hover { border-color: var(--border); color: var(--ink); }
+/* Same `display` vs. `[hidden]` precedence issue as .feature-grid above -
+   the warmup card's own `display: block` needs the same scoped override so
+   toggling `hidden` on it (an unrecognized role, no warmup mapping) works. */
+.quiz-result-card[hidden] { display: none; }
+.quiz-result-card .step-index { margin-bottom: var(--space-2); }
+.quiz-result-card h3 { margin: 0 0 var(--space-2); }
+.quiz-result-card p { margin: 0; color: var(--muted); }
+
 /* ---------------------------------------------------------------------------
    Tile index -- 8 compact tiles, "everything else in the program"
    --------------------------------------------------------------------------- */

@@ -22,7 +22,6 @@ const { articleJsonLd, websiteJsonLd } = require('./structuredData.js');
 const focuses = require(path.join('..', '..', 'content', 'focuses.json'));
 const drills = require(path.join('..', '..', 'content', 'drills.json'));
 const warmups = require(path.join('..', '..', 'content', 'warmups.json'));
-const benchmarks = require(path.join('..', '..', 'content', 'benchmarks.json'));
 const deathCauses = require(path.join('..', '..', 'content', 'deathCauses.json'));
 
 // The web tracker's own client-side logic (task-mt83rhrh-759f27 item 2/5) --
@@ -39,6 +38,13 @@ const TRACKER_CLIENT_JS = fs.readFileSync(path.join(__dirname, 'trackerClient.js
 // include combined/any-role entries not meaningful as a single dropdown
 // choice here).
 const TRACKER_ROLES = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
+
+// The Start Here routing quiz's own client-side logic (task-mt83rhrh-759f27
+// item 1, rescoped to an enhancement on the existing Start Here/Three-steps
+// sections rather than a from-scratch onboarding build) -- read once at
+// require time and inlined verbatim, same pattern as TRACKER_CLIENT_JS
+// above and src/web/shell.js's own SITE_CSS.
+const QUIZ_CLIENT_JS = fs.readFileSync(path.join(__dirname, 'quizClient.js'), 'utf8');
 
 const { RIOT_DISCLAIMER, TRADEMARK_NOTICE } = site;
 
@@ -179,6 +185,54 @@ function renderFeatureCards(items) {
       </a>`).join('\n      ');
 }
 
+// Start Here routing quiz (task-mt83rhrh-759f27 item 1, rescoped): three
+// questions, answered inline on the homepage, that reveal direct links to
+// the matching focus card/drill/warmup once all three are chosen. The
+// heavy lifting (resolving a focus id to its real drill/warmup hrefs) is
+// src/web/quizClient.js's own buildRoutingLinks(), unit-tested directly
+// against content/focuses.json/content/warmups.json in
+// test/quizClient.test.js -- this function only renders the static
+// question markup and the (initially hidden) results shell that script
+// fills in.
+function renderStartHereQuiz() {
+  const roleOptions = '<option value="">Select</option>' +
+    ['Top', 'Jungle', 'Mid', 'ADC', 'Support'].map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+  const rankOptions = '<option value="">Select</option>' +
+    benchmarks.ranks.map(r => `<option value="${escapeHtml(r.rank)}">${escapeHtml(r.rank)}</option>`).join('');
+  const focusOptions = '<option value="">Select</option>' +
+    focuses.map(f => `<option value="${escapeHtml(f.id)}">${escapeHtml(f.title)}</option>`).join('');
+
+  return `<section class="zone-content quiz-app" data-quiz-app data-base-url="${escapeHtml(site.url(''))}">
+      <h2>Or answer 3 questions and skip ahead</h2>
+      <p class="t-compact">Rather not read the steps above and self-navigate? Answer these and get routed straight to your specific focus card, drill, and warmup.</p>
+      <div class="quiz-form">
+        <label>Your role <select data-quiz-role>${roleOptions}</select></label>
+        <label>Your rank <select data-quiz-rank>${rankOptions}</select></label>
+        <label>Biggest thing holding you back <select data-quiz-focus>${focusOptions}</select></label>
+      </div>
+      <p class="callout" data-quiz-prompt>Answer all three above to get routed straight to what to do next.</p>
+      <div class="feature-grid" data-quiz-results hidden>
+        <a class="quiz-result-card" data-quiz-focus-link href="${escapeHtml(site.url('focus-menu.html'))}">
+          <span class="step-index t-label">01</span>
+          <h3>Your focus card</h3>
+          <p class="t-compact">The exact focus on the menu that matches what you picked, with its own graduation bar.</p>
+        </a>
+        <a class="quiz-result-card" data-quiz-drill-link href="${escapeHtml(site.url('drills.html'))}">
+          <span class="step-index t-label">02</span>
+          <h3>Its drill</h3>
+          <p class="t-compact">The one practice-tool drill built to train that exact focus.</p>
+        </a>
+        <a class="quiz-result-card" data-quiz-warmup-link href="${escapeHtml(site.url('warmup.html'))}" hidden>
+          <span class="step-index t-label">03</span>
+          <h3>Your role's warmup</h3>
+          <p class="t-compact">A 15-minute routine for your role, to run before every ranked game.</p>
+        </a>
+      </div>
+      <script id="quiz-focuses-data" type="application/json">${JSON.stringify(focuses)}</script>
+      <script>${QUIZ_CLIENT_JS}</script>
+    </section>`;
+}
+
 function renderTileIndex(items) {
   const tiles = items.map(([file, title, text]) => `<li><a class="tile" href="${escapeHtml(site.url(file))}">
           <span class="tile-title t-compact">${escapeHtml(title)}</span>
@@ -233,6 +287,7 @@ function renderHome() {
         <li><span class="step-index t-label">03</span><p class="t-compact">Play with that one focus held for two or three games, log every game, and review after.</p></li>
       </ol>
     </section>
+    ${renderStartHereQuiz()}
     <section class="zone-content">
       <h2>Start here</h2>
       <div class="feature-grid">
