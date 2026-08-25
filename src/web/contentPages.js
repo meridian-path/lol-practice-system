@@ -227,9 +227,23 @@ function renderProgram() {
 // ---------------------------------------------------------------------------
 // baseline.html -- guide A2, A3 (A3 includes the benchmarks table block)
 // ---------------------------------------------------------------------------
+
+// Freshness trust signal (task-mt83rhrh-759f27 item 10) - a real,
+// domain-specific one given LoL ships a new patch roughly every 2 weeks.
+// The CS/min-by-rank figures themselves are community-sourced averages
+// (content/benchmarks.json's own "provenance" field), not raw per-patch
+// game data, so they don't need updating every patch - but stating which
+// patch they were last checked against is still an honest, concrete signal
+// a visitor can act on, and one the audit correctly identified this page
+// lacked entirely. Real current patch confirmed via WebSearch (2026-08-25,
+// live since August 12, 2026) rather than guessed - update this constant
+// whenever the benchmarks table is next reviewed against a newer patch.
+const BENCHMARKS_LAST_REVIEWED = 'Patch 26.16 (August 2026)';
+
 function renderBaseline() {
   const introHtml = `<h1>Day 0: Baseline and Benchmarks</h1>
-    <p class="lead">Before picking a focus, read your own last ten games and compare your numbers against real rank benchmarks. Everything after this point measures you against yourself, not against this table.</p>`;
+    <p class="lead">Before picking a focus, read your own last ten games and compare your numbers against real rank benchmarks. Everything after this point measures you against yourself, not against this table.</p>
+    <p class="callout">Benchmarks table last reviewed for ${escapeHtml(BENCHMARKS_LAST_REVIEWED)}.</p>`;
   return buildPage({
     file: 'baseline.html',
     titleBase: 'CS per Minute by Rank',
