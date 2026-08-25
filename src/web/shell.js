@@ -140,6 +140,15 @@ const NAV_LINKS = [
   { key: 'drills', label: 'Drills', file: 'drills.html' },
   { key: 'warmup', label: 'Warmup', file: 'warmup.html' },
   { key: 'tracker', label: 'Tracker', file: 'tracker.html' },
+  // vod-review.html/tilt-rules.html (task-mt83rhrh-759f27 item 9) - both
+  // were already real, indexable, sitemap-listed pages before this change
+  // (not literally buried subsections), just absent from primary nav, so
+  // a visitor browsing the header had no way to discover either one
+  // without already knowing the URL or reaching it via program.html's own
+  // end-links. .site-nav's own flex-wrap already handles the 2 extra
+  // items with no other CSS change needed.
+  { key: 'vod-review', label: 'VOD Review', file: 'vod-review.html' },
+  { key: 'tilt-rules', label: 'Tilt Rules', file: 'tilt-rules.html' },
   { key: 'downloads', label: 'Downloads', file: 'downloads.html' },
   { key: 'faq', label: 'FAQ', file: 'faq.html' }
 ];
