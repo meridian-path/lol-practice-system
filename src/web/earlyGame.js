@@ -140,7 +140,7 @@ function renderEarlyGame() {
     <h2>How This Ties Into the 12 Focuses</h2>
     <p>Everything on this page maps back to the program's existing focuses. Three in particular get their early-game context filled in here:</p>
     <ul>
-      <li>${focusLink('trade-discipline')} - the level 2/3 spike section above is exactly when a favorable trade, then a clean disengage, gets made or missed.</li>
+      <li>${focusLink('trade-discipline')} - the level 2/3 spike section above is exactly when a favorable trade, then a clean disengage, gets made or missed; <a href="${escapeHtml(site.url('trading.html'))}">Lane Trading Discipline</a> covers the full trade-type and all-in decision this section only introduces.</li>
       <li>${focusLink('cs-per-min')} - first-back timing is the single biggest lever on your early CS/min, since a mistimed recall costs an entire wave.</li>
       <li>${focusLink('vision-cadence')} - the win-condition table above starts with knowing where the enemy jungler is; you can't read a win condition you can't see.</li>
     </ul>
@@ -161,6 +161,7 @@ function renderEarlyGame() {
       [site.url('drills.html#trade-then-back'), 'Run the Trade-Then-Back Pattern drill'],
       [site.url('focus-menu.html'), 'See the full Focus Menu'],
       [site.url('wave-management.html'), 'Wave Management: the core early-game lane-control skill'],
+      [site.url('trading.html'), 'The full trade-type breakdown and all-in decision: Lane Trading Discipline'],
       [site.url('macro-play.html'), 'What comes after the first 15 minutes: Macro Play and Win Condition']
     ])}
   </div>`;
