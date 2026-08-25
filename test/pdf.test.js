@@ -64,3 +64,75 @@ test('run() never throws and skips cleanly when dist/ does not exist yet', async
     fs.existsSync = originalExists;
   }
 });
+
+// findBrowser()'s two lookup strategies (a cheap fs.existsSync check for
+// absolute-path candidates, a spawned "where"/"which" for bare-name
+// candidates via the unexported resolveOnPath()) were previously untested --
+// on a real Windows dev machine, the very first absolute Microsoft Edge
+// candidate already exists, so the normal test run never even reaches the
+// path-based branch. Forcing every absolute candidate to "not exist" and
+// every spawned lookup to fail exercises the full fallthrough-to-null case;
+// forcing one spawned lookup to succeed exercises the path-based find case
+// (including resolveOnPath()'s own "take the first non-empty trimmed
+// stdout line" parsing, since a real "where" can print more than one match).
+const child_process = require('child_process');
+
+// Awaits fn() before restoring fs.existsSync, whether fn is sync or async --
+// a plain try/finally without the await would restore the mock before an
+// async fn's own awaits (e.g. run()) finish.
+async function withNoAbsoluteBrowserCandidates(fn) {
+  const originalExists = fs.existsSync;
+  fs.existsSync = (p) => {
+    if (typeof p === 'string' && /msedge\.exe$|chrome\.exe$/i.test(p)) return false;
+    return originalExists(p);
+  };
+  try {
+    return await fn();
+  } finally {
+    fs.existsSync = originalExists;
+  }
+}
+
+test('findBrowser() returns null when no absolute candidate exists and every spawned "where"/"which" lookup fails', async () => {
+  const originalSpawnSync = child_process.spawnSync;
+  child_process.spawnSync = () => { throw new Error('command not found (simulated)'); };
+  try {
+    await withNoAbsoluteBrowserCandidates(() => {
+      assert.equal(pdf.findBrowser(), null);
+    });
+  } finally {
+    child_process.spawnSync = originalSpawnSync;
+  }
+});
+
+test('findBrowser() finds a path-based candidate via a successful spawned lookup, taking the first non-empty trimmed line', async () => {
+  const originalSpawnSync = child_process.spawnSync;
+  child_process.spawnSync = () => ({
+    status: 0,
+    stdout: '  C:\\Users\\someone\\AppData\\Local\\Microsoft\\Edge\\Application\\msedge.exe  \r\n\r\nC:\\some\\other\\match.exe\r\n'
+  });
+  try {
+    await withNoAbsoluteBrowserCandidates(() => {
+      const found = pdf.findBrowser();
+      assert.equal(found, 'C:\\Users\\someone\\AppData\\Local\\Microsoft\\Edge\\Application\\msedge.exe');
+    });
+  } finally {
+    child_process.spawnSync = originalSpawnSync;
+  }
+});
+
+test('run() never throws and skips cleanly when no browser binary can be found', async () => {
+  const originalSpawnSync = child_process.spawnSync;
+  child_process.spawnSync = () => { throw new Error('command not found (simulated)'); };
+  try {
+    await withNoAbsoluteBrowserCandidates(async () => {
+      let result;
+      await assert.doesNotReject(async () => { result = await pdf.run(); });
+      assert.equal(result.attempted, false);
+      assert.equal(result.skippedReason, 'no_browser');
+      assert.deepEqual(result.produced, []);
+    });
+  } finally {
+    child_process.spawnSync = originalSpawnSync;
+  }
+});
