@@ -692,6 +692,50 @@ main.page-shell {
 .card-slot .slot-value.pass-bar { color: var(--good); }
 .card-slot .slot-value.common-failure { color: var(--warn); }
 
+/* Mobile-first drill/warmup accordions (drills.html/warmup.html,
+   task-mt83rhrh-759f27 item 7) - a native <details>/<summary> wrapping
+   each .card, collapsed by default so a player on a phone mid-session taps
+   straight to the one card they need instead of scrolling past the rest.
+   The inner .card-title is hidden here (not removed server-side) since the
+   summary itself already shows the same title as the always-visible,
+   tappable header - keeping both would repeat it. */
+.card-accordion {
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent-rule);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-5);
+  background: var(--paper);
+}
+.card-accordion > summary {
+  padding: var(--space-4);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: var(--type-subsection-weight);
+  color: var(--ink);
+  list-style: none;
+}
+.card-accordion > summary::-webkit-details-marker { display: none; }
+.card-accordion > summary::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: var(--space-2);
+  color: var(--accent);
+  transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+}
+.card-accordion[open] > summary::before { transform: rotate(90deg); }
+.card-accordion .card {
+  border: none;
+  border-top: 1px solid var(--rule);
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-top: var(--space-4);
+}
+.card-accordion .card-title { display: none; }
+.card-accordion > p { padding: 0 var(--space-4) var(--space-4); margin: 0; }
+.card-accordion > .slot-label { padding: 0 var(--space-4); }
+
 .checklist-row {
   display: flex;
   align-items: flex-start;

@@ -63,8 +63,12 @@ test('drills.html\'s drill cards each carry a data-roles attribute inherited fro
   for (const d of drills) {
     const focus = focusByDrillId.get(d.id);
     const expectedRoles = focus ? focus.roles.join(',') : ['Top', 'Jungle', 'Mid', 'ADC', 'Support'].join(',');
-    const expected = `id="${d.id}" data-roles="${expectedRoles}"`;
-    assert.ok(drillsHtml.includes(expected), `drill card ${d.id} missing or mismatched data-roles attribute (expected: ${expected})`);
+    // Not an exact-string match: drill cards are also item 7's own
+    // <details class="card-accordion"> wrapper (see test/accordion.test.js
+    // for that structure's own dedicated check) - this only pins down
+    // id+data-roles appearing together on the same opening tag.
+    const tagPattern = new RegExp(`<details id="${d.id}"[^>]*data-roles="${expectedRoles.replace(/,/g, '\\,')}"`);
+    assert.ok(tagPattern.test(drillsHtml), `drill card ${d.id} missing or mismatched data-roles attribute (expected roles: ${expectedRoles})`);
   }
 });
 
