@@ -160,6 +160,7 @@ function renderEarlyGame() {
       [site.url('drills.html#recall-timing'), 'Run the Recall Timing drill'],
       [site.url('drills.html#trade-then-back'), 'Run the Trade-Then-Back Pattern drill'],
       [site.url('focus-menu.html'), 'See the full Focus Menu'],
+      [site.url('draft.html'), 'What happens before this: Draft Fundamentals'],
       [site.url('wave-management.html'), 'Wave Management: the core early-game lane-control skill'],
       [site.url('trading.html'), 'The full trade-type breakdown and all-in decision: Lane Trading Discipline'],
       [site.url('macro-play.html'), 'What comes after the first 15 minutes: Macro Play and Win Condition']
