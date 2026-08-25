@@ -31,7 +31,13 @@ const warmupHtml = readDist('warmup.html');
 
 test('every drill on drills.html is wrapped in a <details class="card-accordion"> with its real id and name as the summary', () => {
   for (const d of drills) {
-    assert.ok(drillsHtml.includes(`<details id="${d.id}" class="card-accordion">`), `drill ${d.id} is not wrapped in a card-accordion <details>`);
+    // Not an exact-string match on the opening tag: drill accordions also
+    // carry item 3's own data-roles attribute after class="card-accordion"
+    // (see test/roleFilter.test.js for that attribute's own dedicated
+    // check) - this regex only pins down id+class, tolerant of whatever
+    // else the tag carries.
+    const tagPattern = new RegExp(`<details id="${d.id}" class="card-accordion"[^>]*>`);
+    assert.ok(tagPattern.test(drillsHtml), `drill ${d.id} is not wrapped in a card-accordion <details>`);
     assert.ok(drillsHtml.includes(`<summary>${d.name}</summary>`), `drill ${d.id}'s summary should be its real name: ${d.name}`);
   }
 });
