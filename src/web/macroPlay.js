@@ -153,7 +153,8 @@ function renderMacroPlay() {
       [site.url('focus-menu.html'), 'See the full Focus Menu'],
       [site.url('early-game.html'), 'Before macro: the first 15 minutes'],
       [site.url('wave-management.html'), 'Wave state feeds every read on this page: Wave Management'],
-      [site.url('teamfighting.html'), 'Once the fight is on: Teamfighting Fundamentals']
+      [site.url('teamfighting.html'), 'Once the fight is on: Teamfighting Fundamentals'],
+      [site.url('objectives.html'), 'Getting ready before it spawns: Objective Control']
     ])}
   </div>`;
 
