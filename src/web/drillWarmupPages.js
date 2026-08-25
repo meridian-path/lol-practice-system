@@ -46,6 +46,55 @@ function renderRoleFilterBar() {
     </div>`;
 }
 
+// Mobile-first priority for drills.html/warmup.html (task-mt83rhrh-759f27
+// item 7) - these two pages, unlike the rest of the site, are used
+// mid-session on a phone as a quick reference, not read start-to-finish.
+// Twelve full drill cards (or five warmup cards) stacked and scrollable is
+// real friction on a small screen when a player only wants the one card
+// they came for. Wraps each card in a native <details>/<summary> --
+// collapsed by default, no JS needed for the expand/collapse interaction
+// itself (a real browser feature, not reinvented in script), so a player
+// taps straight to the one drill they need instead of scrolling past 11
+// others' full procedure text.
+//
+// The one thing that DOES need a script: this site's own established
+// cross-linking convention deep-links here (`drills.html#<drillId>` from
+// focus-menu.html, the tracker's datalist, the Start Here quiz, etc.) and
+// expects the target content to actually be visible on arrival - a closed
+// <details> would defeat every one of those existing links. Newer browsers
+// auto-expand a <details> when a fragment navigation lands inside it, but
+// rather than depend on that alone, ACCORDION_ANCHOR_SCRIPT below opens
+// the matching <details> explicitly on load and on same-page hash changes
+// (the jump lists below link within the page too), so this works
+// regardless of browser support for the native behavior.
+//
+// extraAttrs (optional): raw extra HTML attributes to splice onto the
+// <details> tag itself - used by renderDrillCard() below to also carry
+// item 3's own data-roles attribute on the exact same element, rather than
+// the accordion and the role filter needing two nested wrapper elements.
+function wrapInAccordion(id, summaryText, innerHtml, extraAttrs = '') {
+  return `<details id="${escapeHtml(id)}" class="card-accordion"${extraAttrs}>
+    <summary>${escapeHtml(summaryText)}</summary>
+    ${innerHtml}
+  </details>`;
+}
+
+const ACCORDION_ANCHOR_SCRIPT = `<script>
+(function () {
+  function openTarget(hash) {
+    if (!hash) return;
+    var id = hash.replace(/^#/, '');
+    if (!id) return;
+    var el = document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') el.open = true;
+  }
+  openTarget(window.location.hash);
+  window.addEventListener('hashchange', function () {
+    openTarget(window.location.hash);
+  });
+})();
+</script>`;
+
 function crossLinks(links) {
   const items = links.map(([href, label]) => `<li><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></li>`).join('\n      ');
   return `<nav class="cross-links" aria-label="Related pages">
@@ -109,9 +158,14 @@ function renderDrillCard(d) {
   // own role relevance rather than needing a second, separately-maintained
   // roles list for drills specifically. A drill with no matching focus
   // (none currently exist) defaults to every role rather than disappearing
-  // from every filter.
+  // from every filter. Carried as an extraAttrs string onto the same
+  // <details> element wrapInAccordion() renders (item 7) rather than a
+  // second wrapper - the role filter's own client script
+  // (roleFilterClient.js) queries any element with data-roles regardless
+  // of tag name, so a <details> with it works exactly like the <div> it
+  // replaced.
   const roles = focus ? focus.roles : ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
-  return `<div id="${escapeHtml(d.id)}" data-roles="${escapeHtml(roles.join(','))}">${cardHtml}${backLinks}</div>`;
+  return wrapInAccordion(d.id, d.name, `${cardHtml}${backLinks}`, ` data-roles="${escapeHtml(roles.join(','))}"`);
 }
 
 function renderDrills() {
@@ -131,7 +185,8 @@ function renderDrills() {
       [site.url('warmup.html'), 'Warmup routines by role']
     ])}
   </div>
-  <script>${ROLE_FILTER_CLIENT_JS}</script>`;
+  <script>${ROLE_FILTER_CLIENT_JS}</script>
+  ${ACCORDION_ANCHOR_SCRIPT}`;
   const description = 'Twelve League of Legends practice-tool drills for CS, wave control, vision, trading, and tilt discipline, each with a measurable pass bar and a progression.';
   return shell.documentShell({
     title: site.pageTitle('12 League of Legends Practice Drills'),
@@ -194,7 +249,7 @@ function renderWarmupCard(w) {
   const backLink = roleGuideLinks
     ? `<p>${roleGuideLinks} · <a href="#warmup-top">Back to top ↑</a></p>`
     : `<p><a href="#warmup-top">Back to top ↑</a></p>`;
-  return `<div id="${escapeHtml(w.id)}"><p class="slot-label">${escapeHtml(w.role)}</p>${cardHtml}${backLink}</div>`;
+  return wrapInAccordion(w.id, w.title, `<p class="slot-label">${escapeHtml(w.role)}</p>${cardHtml}${backLink}`);
 }
 
 function renderWarmup() {
@@ -212,7 +267,8 @@ function renderWarmup() {
       [site.url('drills.html'), 'The 12 practice-tool drills'],
       [site.url('program.html'), 'Back to the 30-day program']
     ])}
-  </div>`;
+  </div>
+  ${ACCORDION_ANCHOR_SCRIPT}`;
   const description = 'Five 15-minute League of Legends warmup routines by role, each built from physical prep, a mechanical drill block, and a two-minute mental reset.';
   return shell.documentShell({
     title: site.pageTitle('LoL Warmup Routines by Role'),
