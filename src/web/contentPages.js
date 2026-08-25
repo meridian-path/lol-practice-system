@@ -33,6 +33,13 @@ const drills = require(path.join('..', '..', 'content', 'drills.json'));
 const sectionsById = new Map(guide.sections.map(s => [s.id, s]));
 const renderCtx = { benchmarks, focuses, drills };
 
+// Role filter's own client-side logic (task-mt83rhrh-759f27 item 3) - read
+// once at require time and inlined verbatim, same pattern as
+// src/web/shell.js's own SITE_CSS. Also inlined into drills.html
+// (src/web/drillWarmupPages.js) - both pages need it independently, since
+// a visitor may land on either one first.
+const ROLE_FILTER_CLIENT_JS = fs.readFileSync(path.join(__dirname, 'roleFilterClient.js'), 'utf8');
+
 function section(id) {
   const s = sectionsById.get(id);
   if (!s) throw new Error(`Unknown guide section id: ${id}`);
@@ -72,7 +79,7 @@ function renderFocusCardsWithDrillLinks() {
     const drill = byId.get(f.drillId);
     const drillLabel = drill ? drill.name : f.drillId;
     const drillHref = site.url(`drills.html#${f.drillId}`);
-    return `<div class="card" id="${escapeHtml(f.id)}">
+    return `<div class="card" id="${escapeHtml(f.id)}" data-roles="${escapeHtml(f.roles.join(','))}">
     <h3 class="card-title">${escapeHtml(f.title)}</h3>
     <div class="card-slot">
       <span class="slot-label">What It Is</span>
@@ -237,6 +244,25 @@ function renderBaseline() {
 }
 
 // ---------------------------------------------------------------------------
+// Role filter bar (task-mt83rhrh-759f27 item 3) - shared markup between
+// focus-menu.html and drills.html, duplicated between this file and
+// src/web/drillWarmupPages.js rather than pulled into a shared module,
+// matching this file's own standardEndLinks()/crossLinks() precedent
+// (each already duplicated in that same other file for the same reason:
+// exactly one other caller, not worth a new shared module for). The actual
+// filtering is src/web/roleFilterClient.js, inlined once per page below.
+function renderRoleFilterBar() {
+  const roles = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
+  const buttons = ['<button type="button" class="role-filter-btn" data-role-btn="" aria-pressed="true">All</button>']
+    .concat(roles.map(r => `<button type="button" class="role-filter-btn" data-role-btn="${escapeHtml(r)}" aria-pressed="false">${escapeHtml(r)}</button>`))
+    .join('\n      ');
+  return `<div class="role-filter" data-role-filter>
+      <span class="t-label">Filter by role</span>
+      ${buttons}
+      <p class="tracker-note" data-role-filter-count hidden></p>
+    </div>`;
+}
+
 // focus-menu.html -- guide A4 (focus cards, with drill deep-links) + A10
 // ---------------------------------------------------------------------------
 function renderFocusMenu() {
@@ -245,8 +271,10 @@ function renderFocusMenu() {
   const a4 = section('a4-the-focus-menu');
   const a4Html = `<section class="guide-section">
       <h2>${escapeHtml(a4.title)}</h2>
+      ${renderRoleFilterBar()}
       ${a4.body.map(b => (b.type === 'focusCards' ? renderFocusCardsWithDrillLinks() : renderGuideBlock(b, renderCtx))).join('\n')}
-    </section>`;
+    </section>
+    <script>${ROLE_FILTER_CLIENT_JS}</script>`;
   const sectionsHtml = `${a4Html}
     ${renderSection('a10-when-to-change-focus')}`;
   return buildPage({
