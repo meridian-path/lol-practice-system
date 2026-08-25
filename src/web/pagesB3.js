@@ -22,6 +22,23 @@ const { articleJsonLd, websiteJsonLd } = require('./structuredData.js');
 const focuses = require(path.join('..', '..', 'content', 'focuses.json'));
 const drills = require(path.join('..', '..', 'content', 'drills.json'));
 const warmups = require(path.join('..', '..', 'content', 'warmups.json'));
+const benchmarks = require(path.join('..', '..', 'content', 'benchmarks.json'));
+const deathCauses = require(path.join('..', '..', 'content', 'deathCauses.json'));
+
+// The web tracker's own client-side logic (task-mt83rhrh-759f27 item 2/5) --
+// read once at require time and inlined verbatim into tracker.html's own
+// <script> tag, same pattern src/web/shell.js's SITE_CSS already uses for
+// tokens.css/screen.css. See that file's own header for why it's written to
+// run unmodified in both this Node require() context (its own unit tests)
+// and a real browser with no bundler.
+const TRACKER_CLIENT_JS = fs.readFileSync(path.join(__dirname, 'trackerClient.js'), 'utf8');
+
+// Fixed 5-role list, shared between the tracker's two static forms below --
+// matches climbing-{role}.html's own role set exactly (Top/Jungle/Mid/ADC/
+// Support), not content/warmups.json's own looser role labels (which
+// include combined/any-role entries not meaningful as a single dropdown
+// choice here).
+const TRACKER_ROLES = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
 
 const { RIOT_DISCLAIMER, TRADEMARK_NOTICE } = site;
 
@@ -257,6 +274,14 @@ function renderHome() {
 // Tracker
 // ---------------------------------------------------------------------------
 
+function roleOptionsHtml() {
+  return '<option value="">Select</option>' + TRACKER_ROLES.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+}
+
+function resultOptionsHtml() {
+  return '<option value="">Select</option><option value="W">Win</option><option value="L">Loss</option>';
+}
+
 function renderTracker() {
   const workbook = readPrintFiles().find(f => f.base === '05-tracker-workbook');
   const workbookHref = workbook ? printHref(workbook.file) : site.url('downloads.html');
@@ -264,36 +289,88 @@ function renderTracker() {
     ? `<p class="download-meta">${escapeHtml(workbook.typeLabel)} &middot; ${escapeHtml(workbook.sizeLabel)}</p>`
     : '';
 
+  const rankOptionsHtml = '<option value="">Select your rank</option>' +
+    benchmarks.ranks.map(r => `<option value="${escapeHtml(r.rank)}">${escapeHtml(r.rank)}</option>`).join('');
+
+  const deathCauseOptionsHtml = '<option value="">Select</option>' +
+    deathCauses.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+
+  const focusDatalistHtml = focuses.map(f => `<option value="${escapeHtml(f.title)}">`).join('');
+
+  const trackerAppHtml = `<div class="tracker-app" data-tracker-app>
+    <h2>Your Rank</h2>
+    <p class="lead">This drives the benchmark comparison below - it never leaves your browser.</p>
+    <label>Rank <select data-rank-select>${rankOptionsHtml}</select></label>
+    <label><input type="checkbox" data-jungler-checkbox> I mainly play jungle (adjusts the benchmark by -1 CS/min, same as the workbook)</label>
+
+    <h2>Baseline: Your Last 10 Games</h2>
+    <p>Enter your last ten ranked games once, before you start the program - the same one-time baseline the workbook's Baseline sheet asks for.</p>
+    <form class="tracker-form" data-baseline-form>
+      <label>Date <input type="date" name="date" required></label>
+      <label>Champion <input type="text" name="champion" maxlength="40" required></label>
+      <label>Role <select name="role" required>${roleOptionsHtml()}</select></label>
+      <label>Result <select name="result" required>${resultOptionsHtml()}</select></label>
+      <label>CS@10 <input type="number" name="cs10" min="0" max="200" required></label>
+      <label>Minutes <input type="number" name="minutes" min="1" max="90" required></label>
+      <label>Deaths <input type="number" name="deaths" min="0" max="30"></label>
+      <label>Vision Score <input type="number" name="visionScore" min="0" max="200"></label>
+      <button type="submit" class="tracker-submit-btn">Add baseline game</button>
+    </form>
+    <p class="callout" data-baseline-full-note hidden>Baseline is full at 10 games - delete a row below to log a different one.</p>
+    <div data-baseline-table-slot></div>
+    <div data-baseline-stats-slot></div>
+
+    <h2>Game Log</h2>
+    <p>One row per game after your baseline. Every stat below updates automatically as you log games - the same rolling-average formulas the workbook's Game Log sheet computes.</p>
+    <form class="tracker-form" data-gamelog-form>
+      <label>Date <input type="date" name="date" required></label>
+      <label>Champion <input type="text" name="champion" maxlength="40" required></label>
+      <label>Role <select name="role" required>${roleOptionsHtml()}</select></label>
+      <label>Result <select name="result" required>${resultOptionsHtml()}</select></label>
+      <label>Focus <input type="text" name="focus" list="tracker-focus-list" maxlength="60" placeholder="e.g. Farming Consistency"></label>
+      <datalist id="tracker-focus-list">${focusDatalistHtml}</datalist>
+      <label>Adherence (1-5) <select name="adherence"><option value="">Select</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>
+      <label>CS@10 <input type="number" name="cs10" min="0" max="200" required></label>
+      <label>Minutes <input type="number" name="minutes" min="1" max="90" required></label>
+      <label>Deaths <input type="number" name="deaths" min="0" max="30"></label>
+      <label>Primary Death Cause <select name="deathCause">${deathCauseOptionsHtml}</select></label>
+      <label>Vision Score <input type="number" name="visionScore" min="0" max="200"></label>
+      <label>One-Sentence Lesson <input type="text" name="lesson" maxlength="200" placeholder="What will you change next game?"></label>
+      <button type="submit" class="tracker-submit-btn">Log this game</button>
+    </form>
+    <div data-gamelog-stats-slot></div>
+    <div data-gamelog-table-slot></div>
+
+    <h2>Progress</h2>
+    <p>One box per game across the 30-day program's three ten-game blocks - filled as you log games above, same data as the Game Log, nothing separate to keep in sync.</p>
+    <div data-progress-slot></div>
+
+    <button type="button" class="tracker-clear-btn" data-clear-tracker>Clear all tracker data in this browser</button>
+    <p class="tracker-note">Everything above lives only in this browser's local storage - nothing is sent anywhere, and nothing here creates an account. Clearing your browser data, or using a different device or browser, starts you over.</p>
+  </div>
+  <script id="tracker-benchmarks-data" type="application/json">${JSON.stringify(benchmarks)}</script>
+  <script>${TRACKER_CLIENT_JS}</script>`;
+
   const body = `<div class="zone-measure">
-    <h1>The Tracker Workbook</h1>
-    <p class="lead">One spreadsheet, one row per game. It is the only tool in this program that does math for you on purpose - everything else here is a habit you build by hand.</p>
+    <h1>The Tracker</h1>
+    <p class="lead">Log your games right here, on any device - the running averages update automatically, and nothing you enter leaves your browser. Prefer a spreadsheet, or want it on a second device without retyping ten games? Download the same tracker as an .xlsx below.</p>
+    ${trackerAppHtml}
+    <h2>Prefer a Spreadsheet? Download the Workbook</h2>
+    <p>The original tracker, as a real spreadsheet file - the same Baseline and Game Log structure as above, plus a Block Review sheet, a Champion Pool sheet, and the Benchmarks reference table, all in one file you can open in Excel, LibreOffice Calc, or Google Sheets.</p>
     <a class="btn-primary" href="${escapeHtml(workbookHref)}">Download the tracker workbook (.xlsx)</a>
     ${workbookMeta}
-    <h2>What is inside</h2>
-    <ul>
-      <li><strong>Baseline sheet.</strong> Enter your last ten games once, before you start. The sheet computes your ten-game averages for you, so you cannot accidentally round in your own favor.</li>
-      <li><strong>Game log.</strong> One row per game after that: CS at the ten-minute mark, final CS/min, deaths, vision score, result, and which focus you were holding that game.</li>
-      <li><strong>Running averages.</strong> Every formula is already built in - you read numbers, you never calculate them.</li>
-    </ul>
-    <h2>How to use it</h2>
-    <ol>
-      <li>Fill in your Day 0 baseline from your last ten games - see the <a href="${escapeHtml(site.url('baseline.html'))}">baseline page</a> for how to read the result.</li>
-      <li>Pick one focus from the <a href="${escapeHtml(site.url('focus-menu.html'))}">focus menu</a> and log every game while you hold it, including the ones you lose badly.</li>
-      <li>At the end of each ten-game block, read the averages and decide whether to graduate to a new focus or repeat.</li>
-    </ol>
-    <p>It opens in Excel, LibreOffice Calc, or Google Sheets (File &gt; Import). No macros, no add-ins, no account, and nothing you enter leaves your computer - it is a local file, not a connected app.</p>
     <p>Want the rest of the program on paper too? The <a href="${escapeHtml(site.url('downloads.html'))}">full printable pack</a> has the guide, the drills, and two blank study sheets alongside this workbook.</p>
   </div>`;
 
-  const description = 'A free spreadsheet for logging League of Legends solo queue games: a baseline sheet, a per-game log, and automatic ten-game averages.';
+  const description = 'A free web-based tracker for League of Legends solo queue games: log games from any device, automatic rolling averages, no account required.';
   return shell.documentShell({
-    title: site.pageTitle('Free LoL Practice Tracker Spreadsheet'),
+    title: site.pageTitle('Free LoL Practice Tracker'),
     description,
     bodyHtml: body,
     canonical: site.absoluteUrl('tracker.html'),
     active: 'tracker',
     jsonLd: articleJsonLd({
-      headline: 'Free LoL Practice Tracker Spreadsheet',
+      headline: 'The Tracker',
       description,
       datePublished: site.BUILD_DATE,
       dateModified: site.BUILD_DATE,

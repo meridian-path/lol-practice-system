@@ -6,6 +6,7 @@
 // file's header comment for why
 // this is written by hand instead of pulling in a dependency.
 
+const path = require('path');
 const { ZipWriter } = require('./zip.js');
 const { RIOT_DISCLAIMER, TRADEMARK_NOTICE } = require('../site.js');
 
@@ -283,16 +284,11 @@ ${rels.join('\n')}
 // Sheet content -- one builder function per sheet.
 // ---------------------------------------------------------------------------
 
-const DEATH_CAUSES = [
-  'Overextended',
-  'Bad trade',
-  'Ganked (no ward)',
-  'Objective fight',
-  'Turret dive',
-  'Isolated / split too far',
-  'Misplayed cooldown',
-  'Other'
-];
+// Single source of truth shared with the web tracker (src/web/pagesB3.js's
+// renderTracker()) -- extracted here (task-mt83rhrh-759f27) so both the
+// xlsx's Game Log dropdown and the web tracker's equivalent field can never
+// drift apart the way two independently-maintained literal arrays would.
+const DEATH_CAUSES = require(path.join('..', '..', 'content', 'deathCauses.json'));
 
 const GAME_LOG_DATA_START_ROW = 10; // row after the header row (9)
 const GAME_LOG_DATA_END_ROW = 69;   // 60 rows: 10..69

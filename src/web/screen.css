@@ -647,6 +647,115 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
 .drill-grid .card { margin-bottom: 0; }
 
 /* ---------------------------------------------------------------------------
+   Web tracker (tracker.html, task-mt83rhrh-759f27 item 2/5) -- the site's
+   first real interactive form UI. Reuses .card/.data-table/.callout/
+   .btn-primary rather than inventing parallel styles for the same visual
+   idea; only genuinely new patterns (the form grid, the progress boxes) get
+   their own rules here. Mobile-first is NOT this section's own priority
+   (that's item 7, scoped to Warmup/Drills specifically) but it still needs
+   to work on a phone, since the tracker is exactly the kind of tool someone
+   might reach for mid-session -- the form grid collapses to one column and
+   wide tables scroll their own axis rather than the page.
+   --------------------------------------------------------------------------- */
+.tracker-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+@media (min-width: 640px) {
+  .tracker-form { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 960px) {
+  .tracker-form { grid-template-columns: repeat(3, 1fr); }
+}
+.tracker-form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 0.9em;
+}
+.tracker-form input,
+.tracker-form select {
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+/* A distinct style from .btn-primary on purpose: design-standards.md's own
+   "exactly one primary action per page" rule reserves .btn-primary for the
+   workbook download below, so these form-scoped submit buttons (there are
+   two, one per form) get their own clearly-actionable-but-secondary look
+   instead of competing with it. */
+.tracker-submit-btn {
+  align-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  background: var(--paper);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font: inherit;
+}
+.tracker-submit-btn:hover { background: var(--surface); }
+
+.tracker-note { color: var(--ink); font-style: italic; }
+
+.tracker-table-scroll { overflow-x: auto; }
+.tracker-table-scroll table.data-table { min-width: 720px; }
+
+.tracker-stats {
+  list-style: none;
+  margin: var(--space-4) 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+}
+@media (min-width: 640px) {
+  .tracker-stats { grid-template-columns: repeat(2, 1fr); }
+}
+.tracker-stats li {
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.tracker-progress { margin: var(--space-4) 0; }
+.progress-block { margin-bottom: var(--space-3); }
+.progress-block-label { display: block; margin-bottom: var(--space-1); font-size: 0.9em; }
+.progress-row { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+.progress-box {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+}
+.progress-box-filled { background: var(--accent); border-color: var(--accent); }
+
+.tracker-clear-btn {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  margin: var(--space-4) 0;
+}
+
+/* ---------------------------------------------------------------------------
    Wave-state lane diagram (wave-management.html) -- a horizontal track with
    a tower glyph at each end and a minion-dot cluster at the clash point.
    Colors reuse --accent/--warn (the same pair every other page already
