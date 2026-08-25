@@ -22,6 +22,7 @@ const { articleJsonLd, websiteJsonLd } = require('./structuredData.js');
 const focuses = require(path.join('..', '..', 'content', 'focuses.json'));
 const drills = require(path.join('..', '..', 'content', 'drills.json'));
 const warmups = require(path.join('..', '..', 'content', 'warmups.json'));
+const benchmarks = require(path.join('..', '..', 'content', 'benchmarks.json'));
 const deathCauses = require(path.join('..', '..', 'content', 'deathCauses.json'));
 
 // The web tracker's own client-side logic (task-mt83rhrh-759f27 item 2/5) --
