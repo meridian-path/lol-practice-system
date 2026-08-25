@@ -279,6 +279,55 @@ function renderVodSheet() {
   });
 }
 
+// task-mt83rhrh-759f27 item 8's real lead magnet: a genuinely new,
+// on-brand fillable sheet (matching the Matchup Study Sheet/VOD Review
+// Sheet pair above exactly, not a different format), one 10-game block's
+// worth of tracking for whichever focus a player is currently holding.
+// Deliberately NOT wired behind any client-side "gate" -- every other
+// download on this site is explicitly, repeatedly promised free with no
+// email/account/payment (downloads.html, tracker.html, the home page all
+// say this in as many words), and a client-side gate on a static file is
+// both trivially bypassable and would directly contradict that standing,
+// sitewide promise. Real fix per the task's own actual goal (replace a
+// vague "get updates" ask with a concrete one): src/web/shell.js's
+// renderNewsletterSignup() now names this real, specific asset as the
+// subscribe incentive instead of a generic "get updates" line, while the
+// file itself stays a real, ungated download like every other one.
+function renderFocusCard() {
+  const gameRows = Array.from({ length: 10 }, (_, i) => `Game ${i + 1}: held the focus? logged it?`);
+  const gameSections = gameRows.map(checklistRow).join('\n');
+  const body = `${cover({ title: 'Focus Card', subtitle: 'One page per 10-game block - track the one focus you picked, game by game.' })}
+  <div class="card">
+    <h3 class="card-title">This Block's Focus</h3>
+    ${fillLine('My focus (from the Focus Menu)')}
+    ${fillLine("The number I'm tracking")}
+    ${fillLine('My baseline before this block')}
+    ${fillLine('Graduation bar - what "done" looks like')}
+  </div>
+  <div class="card">
+    <h3 class="card-title">Game By Game</h3>
+    ${gameSections}
+  </div>
+  <div class="card">
+    <h3 class="card-title">Block Review</h3>
+    ${fillLine('Did I graduate?')}
+    ${fillLine('If not, what specifically is still missing?')}
+    ${fillLine('Next block: same focus again, or a new one?')}
+  </div>`;
+  return documentShell({
+    title: 'Solo Queue Practice System - Focus Card',
+    description: 'A blank, fillable one-page template for tracking one focus across a 10-game practice block.',
+    bodyHtml: body,
+    docName: 'Focus Card',
+    cardDoc: true,
+    // focus-menu.html covers the same 12-focus/graduation-bar system as
+    // web content -- direct web equivalent, same convention as the other
+    // two fillable sheets above.
+    canonical: absoluteUrl('focus-menu.html'),
+    noindex: true
+  });
+}
+
 function readmeLink(href, label) {
   return `<a href="./${href}">${escapeHtml(label)}</a>`;
 }
@@ -293,7 +342,8 @@ function renderReadme() {
     { href: '04-drill-library.html', label: 'Drill Library', text: 'print, three cards to a page. Work the drill matching your current focus.' },
     { href: '05-tracker-workbook.xlsx', label: 'Tracker Workbook', text: 'log every game here (opens in Excel, LibreOffice Calc, or Google Sheets via File > Import).' },
     { href: '06-matchup-study-sheet.html', label: 'Matchup Study Sheet', text: 'print blank copies as needed, one per matchup you study.' },
-    { href: '07-vod-review-sheet.html', label: 'VOD Review Sheet', text: 'print blank copies as needed, one per full review.' }
+    { href: '07-vod-review-sheet.html', label: 'VOD Review Sheet', text: 'print blank copies as needed, one per full review.' },
+    { href: '08-focus-card.html', label: 'Focus Card', text: 'print one per 10-game block - the same focus, number, and graduation bar from the Focus Menu, plus a game-by-game tracker.' }
   ];
   const body = `${cover({ title: 'README', subtitle: 'What is in this package, and the order to use it in.' })}
   <ol>${items.map(i => `<li>${readmeLink(i.href, i.label)} - ${escapeHtml(i.text)}</li>`).join('')}</ol>
@@ -346,6 +396,7 @@ module.exports = {
   renderDrillLibrary,
   renderMatchupSheet,
   renderVodSheet,
+  renderFocusCard,
   renderReadme,
   renderQuickStart,
   // Exported so the web build (src/web/contentPages.js)

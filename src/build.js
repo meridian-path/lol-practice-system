@@ -63,6 +63,7 @@ function build() {
 
   written.push(writeFile('06-matchup-study-sheet.html', pages.renderMatchupSheet()));
   written.push(writeFile('07-vod-review-sheet.html', pages.renderVodSheet()));
+  written.push(writeFile('08-focus-card.html', pages.renderFocusCard()));
 
   return written;
 }

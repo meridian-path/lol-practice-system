@@ -280,9 +280,17 @@ function renderFooterCredit() {
  */
 function renderNewsletterSignup() {
   const embedTitle = 'Email signup for Solo Queue Practice updates';
+  // task-mt83rhrh-759f27 item 8: a concrete, named incentive instead of a
+  // vague "get updates" ask - the Focus Card (print/downloads.html) is a
+  // real, ungated download either way (see src/render/pages.js's
+  // renderFocusCard() for why this session did not build a client-side
+  // gate: it would either be trivially bypassable or contradict this
+  // site's own repeated "no email required" promise on every other
+  // download), named here as the reason to subscribe rather than pretend
+  // it is locked behind doing so.
   return `<div class="newsletter-signup">
-      <h2 class="newsletter-heading">Get program updates by email</h2>
-      <p class="newsletter-description">One email when new drills, warmups, or focus content ship. No spam, unsubscribe anytime.</p>
+      <h2 class="newsletter-heading">Get the Focus Card, plus program updates</h2>
+      <p class="newsletter-description">Subscribe and grab the printable <a href="${escapeHtml(site.url('downloads.html'))}">Focus Card</a> - one page per 10-game block, no email required to download it, but a good reason to stay in the loop. One email when new drills, warmups, or focus content ship. No spam, unsubscribe anytime.</p>
       <div class="newsletter-embed" data-newsletter-slot data-newsletter-src="${escapeHtml(NEWSLETTER_FORM_ACTION)}" data-newsletter-title="${escapeHtml(embedTitle)}"></div>
       <noscript><p class="newsletter-description"><a href="${escapeHtml(SUBSTACK_PUBLICATION_URL)}" target="_blank" rel="noopener noreferrer">Subscribe on Substack</a></p></noscript>
     </div>`;

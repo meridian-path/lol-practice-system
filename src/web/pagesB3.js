@@ -69,7 +69,8 @@ const DOC_LABELS = {
   '04-drill-library': 'Drill Library',
   '05-tracker-workbook': 'Tracker Workbook',
   '06-matchup-study-sheet': 'Matchup Study Sheet',
-  '07-vod-review-sheet': 'VOD Review Sheet'
+  '07-vod-review-sheet': 'VOD Review Sheet',
+  '08-focus-card': 'Focus Card'
 };
 
 const TYPE_LABELS = {
