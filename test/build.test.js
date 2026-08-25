@@ -17,7 +17,8 @@ const EXPECTED_FILES = [
   '04-drill-library.html',
   '05-tracker-workbook.xlsx',
   '06-matchup-study-sheet.html',
-  '07-vod-review-sheet.html'
+  '07-vod-review-sheet.html',
+  '08-focus-card.html'
 ];
 
 test('build() produces exactly the expected file list in dist/', () => {
