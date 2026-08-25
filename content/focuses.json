@@ -5,7 +5,8 @@
     "whatItIs": "Whether you're converting lane time into gold at a rate that matches your rank.",
     "theNumber": "CS/min, checked against the Benchmarks table for your rank.",
     "drillId": "cs-10min",
-    "graduationBar": "Land inside or above your rank's CS/min band for 3 straight games before moving on."
+    "graduationBar": "Land inside or above your rank's CS/min band for 3 straight games before moving on.",
+    "roles": ["Top", "Jungle", "Mid", "ADC"]
   },
   {
     "id": "death-cause",
@@ -13,7 +14,8 @@
     "whatItIs": "Whether your deaths cluster around one repeatable, fixable mistake.",
     "theNumber": "Most-repeated death cause across a 10-game block, from the Death Audit.",
     "drillId": "death-audit",
-    "graduationBar": "Your top death cause drops out of your top 2 causes for a full 10-game block."
+    "graduationBar": "Your top death cause drops out of your top 2 causes for a full 10-game block.",
+    "roles": ["Top", "Jungle", "Mid", "ADC", "Support"]
   },
   {
     "id": "vision-cadence",
@@ -21,7 +23,8 @@
     "whatItIs": "Whether you place wards on a rhythm instead of only when you already feel unsafe.",
     "theNumber": "Longest gap, in seconds, with zero active wards in your area.",
     "drillId": "ward-clock",
-    "graduationBar": "No gap over 90 seconds for 3 straight games."
+    "graduationBar": "No gap over 90 seconds for 3 straight games.",
+    "roles": ["Top", "Jungle", "Mid", "ADC", "Support"]
   },
   {
     "id": "objective-awareness",
@@ -29,7 +32,8 @@
     "whatItIs": "Whether you track and communicate objective spawns before they matter, not after.",
     "theNumber": "Objective timers called 30+ seconds early, out of total objectives that spawned.",
     "drillId": "objective-timer-precall",
-    "graduationBar": "Call at least 3 of 4 objective spawns early for 3 straight games."
+    "graduationBar": "Call at least 3 of 4 objective spawns early for 3 straight games.",
+    "roles": ["Top", "Jungle", "Mid", "ADC", "Support"]
   },
   {
     "id": "wave-management",
@@ -37,7 +41,8 @@
     "whatItIs": "Whether you can hold a lane advantage by controlling where the wave sits, not just by winning fights.",
     "theNumber": "Consecutive waves held at a freeze point without it collapsing.",
     "drillId": "wave-freeze-setup",
-    "graduationBar": "Hold a freeze for 3 consecutive waves in Practice Tool, then once in a real game."
+    "graduationBar": "Hold a freeze for 3 consecutive waves in Practice Tool, then once in a real game.",
+    "roles": ["Top", "Mid", "ADC"]
   },
   {
     "id": "trade-discipline",
@@ -45,7 +50,8 @@
     "whatItIs": "Whether you take favorable trades and then actually leave, instead of staying to \"finish it.\"",
     "theNumber": "Trades that end in a clean disengage, out of 10 attempted.",
     "drillId": "trade-then-back",
-    "graduationBar": "8 of 10 clean disengages in Practice Tool, then applied consistently in a real lane."
+    "graduationBar": "8 of 10 clean disengages in Practice Tool, then applied consistently in a real lane.",
+    "roles": ["Top", "Mid", "ADC", "Support"]
   },
   {
     "id": "jungle-efficiency",
@@ -53,7 +59,8 @@
     "whatItIs": "Whether your opening clear is fast and consistent enough to support ganks on schedule (jungle role only).",
     "theNumber": "Your own calibrated clear-time baseline, in minutes:seconds.",
     "drillId": "jungle-clear-timing",
-    "graduationBar": "Match or beat your own baseline for 3 consecutive Practice Tool runs."
+    "graduationBar": "Match or beat your own baseline for 3 consecutive Practice Tool runs.",
+    "roles": ["Jungle"]
   },
   {
     "id": "recall-efficiency",
@@ -61,7 +68,8 @@
     "whatItIs": "Whether you're recalling with a wave banked and gold used, not out of boredom or nerves.",
     "theNumber": "Low-value recalls per game (recalling with under 4 minions' worth of gold banked).",
     "drillId": "recall-timing",
-    "graduationBar": "No more than 1 low-value recall per game for 3 straight games."
+    "graduationBar": "No more than 1 low-value recall per game for 3 straight games.",
+    "roles": ["Top", "Jungle", "Mid", "ADC", "Support"]
   },
   {
     "id": "minimap-awareness",
@@ -69,7 +77,8 @@
     "whatItIs": "Whether checking the minimap is an automatic rhythm rather than a conscious effort.",
     "theNumber": "Longest gap, in seconds, without a minimap glance during laning phase.",
     "drillId": "minimap-glance-cadence",
-    "graduationBar": "No gap over 15 seconds for a full laning phase, 3 games running."
+    "graduationBar": "No gap over 15 seconds for a full laning phase, 3 games running.",
+    "roles": ["Top", "Jungle", "Mid", "ADC", "Support"]
   },
   {
     "id": "comms-discipline",
@@ -77,7 +86,8 @@
     "whatItIs": "Whether your in-game chat stays useful (plans, information) instead of becoming a tilt outlet.",
     "theNumber": "Complaint-only messages per game, ideally zero.",
     "drillId": "no-flame-comms",
-    "graduationBar": "Zero complaint-only messages for 5 straight games, including at least one loss."
+    "graduationBar": "Zero complaint-only messages for 5 straight games, including at least one loss.",
+    "roles": ["Top", "Jungle", "Mid", "ADC", "Support"]
   },
   {
     "id": "lesson-extraction",
@@ -85,7 +95,8 @@
     "whatItIs": "Whether every game actually teaches you something specific, instead of blurring into the next queue.",
     "theNumber": "One-sentence, specific-action lessons logged per game, out of games played.",
     "drillId": "one-sentence-lesson",
-    "graduationBar": "A logged lesson for every game in a 10-game block, with no exact repeat lesson twice in a row."
+    "graduationBar": "A logged lesson for every game in a 10-game block, with no exact repeat lesson twice in a row.",
+    "roles": ["Top", "Jungle", "Mid", "ADC", "Support"]
   },
   {
     "id": "pressured-farming",
@@ -93,6 +104,7 @@
     "whatItIs": "Whether you keep your CS up even when the enemy is pushing you under tower or all-in range.",
     "theNumber": "Tower hits taken per 3-wave under-tower sequence.",
     "drillId": "last-hit-under-tower",
-    "graduationBar": "Zero tower hits taken across 3 consecutive under-tower waves in Practice Tool."
+    "graduationBar": "Zero tower hits taken across 3 consecutive under-tower waves in Practice Tool.",
+    "roles": ["Top", "Jungle", "Mid", "ADC"]
   }
 ]

@@ -10,6 +10,7 @@
 // the same name since it isn't exported (a small, deliberate duplication
 // rather than reaching into another module's file).
 
+const fs = require('fs');
 const path = require('path');
 const site = require('../site.js');
 const shell = require('./shell.js');
@@ -21,6 +22,29 @@ const focuses = require(path.join('..', '..', 'content', 'focuses.json'));
 const warmups = require(path.join('..', '..', 'content', 'warmups.json'));
 
 const focusByDrillId = new Map(focuses.map((f) => [f.drillId, f]));
+
+// Role filter's own client-side logic (task-mt83rhrh-759f27 item 3) - read
+// once at require time and inlined verbatim, same pattern as
+// src/web/shell.js's own SITE_CSS. Also inlined into focus-menu.html
+// (src/web/contentPages.js) - both pages need it independently, since a
+// visitor may land on either one first.
+const ROLE_FILTER_CLIENT_JS = fs.readFileSync(path.join(__dirname, 'roleFilterClient.js'), 'utf8');
+
+// Duplicated from src/web/contentPages.js's own renderRoleFilterBar()
+// rather than shared, matching this file's existing crossLinks()/
+// standardEndLinks() precedent (each already duplicated the other
+// direction, exactly one other caller each, not worth a shared module).
+function renderRoleFilterBar() {
+  const roles = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
+  const buttons = ['<button type="button" class="role-filter-btn" data-role-btn="" aria-pressed="true">All</button>']
+    .concat(roles.map(r => `<button type="button" class="role-filter-btn" data-role-btn="${escapeHtml(r)}" aria-pressed="false">${escapeHtml(r)}</button>`))
+    .join('\n      ');
+  return `<div class="role-filter" data-role-filter>
+      <span class="t-label">Filter by role</span>
+      ${buttons}
+      <p class="tracker-note" data-role-filter-count hidden></p>
+    </div>`;
+}
 
 function crossLinks(links) {
   const items = links.map(([href, label]) => `<li><a href="${escapeHtml(href)}">${escapeHtml(label)}</a></li>`).join('\n      ');
@@ -80,7 +104,14 @@ function renderDrillCard(d) {
   const backLinks = focus
     ? `<p><a href="${escapeHtml(site.url(`focus-menu.html#${focus.id}`))}">Trains the “${escapeHtml(focus.title)}” focus →</a> · <a href="#drills-top">Back to top ↑</a></p>`
     : `<p><a href="#drills-top">Back to top ↑</a></p>`;
-  return `<div id="${escapeHtml(d.id)}">${cardHtml}${backLinks}</div>`;
+  // Role tags mirror the drill's own matching focus (content/focuses.json's
+  // roles field) - a drill trains one focus, so it inherits that focus's
+  // own role relevance rather than needing a second, separately-maintained
+  // roles list for drills specifically. A drill with no matching focus
+  // (none currently exist) defaults to every role rather than disappearing
+  // from every filter.
+  const roles = focus ? focus.roles : ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
+  return `<div id="${escapeHtml(d.id)}" data-roles="${escapeHtml(roles.join(','))}">${cardHtml}${backLinks}</div>`;
 }
 
 function renderDrills() {
@@ -90,6 +121,7 @@ function renderDrills() {
   const rest = drills.slice(6).map(renderDrillCard).join('\n');
   const body = `<div class="zone-measure">
     ${introHtml}
+    ${renderRoleFilterBar()}
     ${renderDrillJumpList()}
     <h2>The Drills</h2>
     ${first}
@@ -98,7 +130,8 @@ function renderDrills() {
       [site.url('focus-menu.html'), 'Which drill matches your focus'],
       [site.url('warmup.html'), 'Warmup routines by role']
     ])}
-  </div>`;
+  </div>
+  <script>${ROLE_FILTER_CLIENT_JS}</script>`;
   const description = 'Twelve League of Legends practice-tool drills for CS, wave control, vision, trading, and tilt discipline, each with a measurable pass bar and a progression.';
   return shell.documentShell({
     title: site.pageTitle('12 League of Legends Practice Drills'),
