@@ -1,6 +1,6 @@
 'use strict';
 
-// Tests for task-mt83rhrh-759f27 item 8: a real lead magnet (the Focus
+// Tests for the real lead magnet (the Focus
 // Card) named as a concrete subscribe incentive, replacing the vague "get
 // updates" ask - without a client-side gate on the file itself, since this
 // site repeatedly, explicitly promises every download is free with no

@@ -1,6 +1,6 @@
 'use strict';
 
-// Tests for task-mt83rhrh-759f27 item 9: promoting vod-review.html and
+// Tests for promoting vod-review.html and
 // tilt-rules.html to first-class nav items. Both were already real,
 // indexable, sitemap-listed pages before this change (confirmed against
 // src/web/buildSite.js's own WEB_PAGES list and sitemap.js, not literally

@@ -1,7 +1,7 @@
 'use strict';
 
-// Test for task-mt83rhrh-759f27 item 10: a "last reviewed for patch X.X"
-// freshness line on the baseline benchmarks page. The exact patch string
+// Test for the "last reviewed for patch X.X" freshness line on the
+// baseline benchmarks page. The exact patch string
 // is a real, dated fact (confirmed via WebSearch when written, not
 // guessed) that will go stale over time - this test only checks the line
 // exists and looks like a real patch reference, not that it names any
