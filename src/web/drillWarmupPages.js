@@ -23,7 +23,7 @@ const warmups = require(path.join('..', '..', 'content', 'warmups.json'));
 
 const focusByDrillId = new Map(focuses.map((f) => [f.drillId, f]));
 
-// Role filter's own client-side logic (task-mt83rhrh-759f27 item 3) - read
+// Role filter's own client-side logic - read
 // once at require time and inlined verbatim, same pattern as
 // src/web/shell.js's own SITE_CSS. Also inlined into focus-menu.html
 // (src/web/contentPages.js) - both pages need it independently, since a
@@ -46,8 +46,8 @@ function renderRoleFilterBar() {
     </div>`;
 }
 
-// Mobile-first priority for drills.html/warmup.html (task-mt83rhrh-759f27
-// item 7) - these two pages, unlike the rest of the site, are used
+// Mobile-first priority for drills.html/warmup.html - these two pages,
+// unlike the rest of the site, are used
 // mid-session on a phone as a quick reference, not read start-to-finish.
 // Twelve full drill cards (or five warmup cards) stacked and scrollable is
 // real friction on a small screen when a player only wants the one card

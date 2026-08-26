@@ -1,7 +1,6 @@
 'use strict';
 
-// Client-side logic for the web tracker (tracker.html), item 2/5 of the
-// 2026-08-25 site-audit task (task-mt83rhrh-759f27). Written to run
+// Client-side logic for the web tracker (tracker.html). Written to run
 // unmodified in BOTH environments: inlined verbatim into the browser as a
 // plain <script> tag (no bundler on this site, matching
 // src/web/shell.js's THEME_TOGGLE_SCRIPT/THEME_PREPAINT_SCRIPT convention),

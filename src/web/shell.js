@@ -140,7 +140,7 @@ const NAV_LINKS = [
   { key: 'drills', label: 'Drills', file: 'drills.html' },
   { key: 'warmup', label: 'Warmup', file: 'warmup.html' },
   { key: 'tracker', label: 'Tracker', file: 'tracker.html' },
-  // vod-review.html/tilt-rules.html (task-mt83rhrh-759f27 item 9) - both
+  // vod-review.html/tilt-rules.html - both
   // were already real, indexable, sitemap-listed pages before this change
   // (not literally buried subsections), just absent from primary nav, so
   // a visitor browsing the header had no way to discover either one
@@ -277,10 +277,18 @@ function renderFooterCredit() {
  * appears on every page. Distinct from (and does not reintroduce) a
  * donation/affiliate link -- renderFooter()'s comment about staying clean of
  * those is unaffected; this is a plain program-updates signup.
+ *
+ * Substack's own signup-embed iframe can't be restyled cross-origin, and its
+ * support docs confirm the embed form itself has no color/theme
+ * customization option (only hiding the publication logo) -- so
+ * .newsletter-embed-frame below softens the white-box collision with generous
+ * token-driven padding/border/radius around it rather than attempting to
+ * eliminate it (token-role consistency per REFERENCE_LIBRARY.md #15, Radix
+ * Colors).
  */
 function renderNewsletterSignup() {
   const embedTitle = 'Email signup for Solo Queue Practice updates';
-  // task-mt83rhrh-759f27 item 8: a concrete, named incentive instead of a
+  // A concrete, named incentive instead of a
   // vague "get updates" ask - the Focus Card (print/downloads.html) is a
   // real, ungated download either way (see src/render/pages.js's
   // renderFocusCard() for why this session did not build a client-side
@@ -291,7 +299,9 @@ function renderNewsletterSignup() {
   return `<div class="newsletter-signup">
       <h2 class="newsletter-heading">Get the Focus Card, plus program updates</h2>
       <p class="newsletter-description">Subscribe and grab the printable <a href="${escapeHtml(site.url('downloads.html'))}">Focus Card</a> - one page per 10-game block, no email required to download it, but a good reason to stay in the loop. One email when new drills, warmups, or focus content ship. No spam, unsubscribe anytime.</p>
-      <div class="newsletter-embed" data-newsletter-slot data-newsletter-src="${escapeHtml(NEWSLETTER_FORM_ACTION)}" data-newsletter-title="${escapeHtml(embedTitle)}"></div>
+      <div class="newsletter-embed-frame">
+        <div class="newsletter-embed" data-newsletter-slot data-newsletter-src="${escapeHtml(NEWSLETTER_FORM_ACTION)}" data-newsletter-title="${escapeHtml(embedTitle)}"></div>
+      </div>
       <noscript><p class="newsletter-description"><a href="${escapeHtml(SUBSTACK_PUBLICATION_URL)}" target="_blank" rel="noopener noreferrer">Subscribe on Substack</a></p></noscript>
     </div>`;
 }

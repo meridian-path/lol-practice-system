@@ -285,7 +285,7 @@ ${rels.join('\n')}
 // ---------------------------------------------------------------------------
 
 // Single source of truth shared with the web tracker (src/web/pagesB3.js's
-// renderTracker()) -- extracted here (task-mt83rhrh-759f27) so both the
+// renderTracker()) -- extracted here so both the
 // xlsx's Game Log dropdown and the web tracker's equivalent field can never
 // drift apart the way two independently-maintained literal arrays would.
 const DEATH_CAUSES = require(path.join('..', '..', 'content', 'deathCauses.json'));

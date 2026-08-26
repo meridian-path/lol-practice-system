@@ -279,7 +279,7 @@ function renderVodSheet() {
   });
 }
 
-// task-mt83rhrh-759f27 item 8's real lead magnet: a genuinely new,
+// The real lead magnet: a genuinely new,
 // on-brand fillable sheet (matching the Matchup Study Sheet/VOD Review
 // Sheet pair above exactly, not a different format), one 10-game block's
 // worth of tracking for whichever focus a player is currently holding.

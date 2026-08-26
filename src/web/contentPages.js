@@ -33,7 +33,7 @@ const drills = require(path.join('..', '..', 'content', 'drills.json'));
 const sectionsById = new Map(guide.sections.map(s => [s.id, s]));
 const renderCtx = { benchmarks, focuses, drills };
 
-// Role filter's own client-side logic (task-mt83rhrh-759f27 item 3) - read
+// Role filter's own client-side logic - read
 // once at require time and inlined verbatim, same pattern as
 // src/web/shell.js's own SITE_CSS. Also inlined into drills.html
 // (src/web/drillWarmupPages.js) - both pages need it independently, since
@@ -228,7 +228,7 @@ function renderProgram() {
 // baseline.html -- guide A2, A3 (A3 includes the benchmarks table block)
 // ---------------------------------------------------------------------------
 
-// Freshness trust signal (task-mt83rhrh-759f27 item 10) - a real,
+// Freshness trust signal - a real,
 // domain-specific one given LoL ships a new patch roughly every 2 weeks.
 // The CS/min-by-rank figures themselves are community-sourced averages
 // (content/benchmarks.json's own "provenance" field), not raw per-patch
@@ -258,7 +258,7 @@ function renderBaseline() {
 }
 
 // ---------------------------------------------------------------------------
-// Role filter bar (task-mt83rhrh-759f27 item 3) - shared markup between
+// Role filter bar - shared markup between
 // focus-menu.html and drills.html, duplicated between this file and
 // src/web/drillWarmupPages.js rather than pulled into a shared module,
 // matching this file's own standardEndLinks()/crossLinks() precedent

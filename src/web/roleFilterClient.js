@@ -1,7 +1,7 @@
 'use strict';
 
-// Client-side logic for the role filter on focus-menu.html and drills.html
-// (task-mt83rhrh-759f27 item 3). Both pages' cards already carry a real
+// Client-side logic for the role filter on focus-menu.html and drills.html.
+// Both pages' cards already carry a real
 // data-roles attribute (content/focuses.json's own roles field - see
 // src/web/contentPages.js's renderFocusCardsWithDrillLinks() and
 // src/web/drillWarmupPages.js's renderDrillCard()); this script only
