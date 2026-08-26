@@ -24,6 +24,23 @@ const EM_DASH = '—';
 // unchanged by a literal-character-only grep of the .js source).
 const EM_DASH_ENCODED = /&mdash;|&#8212;|&#x2014;/i;
 
+// Internal task/decision ids from the shared Orchestra queue must never leak
+// into this public repo -- they've shown up as source comments before (a
+// recurring incident class, twice already elsewhere in this multi-asset
+// setup) and, on this site, screen.css/tokens.css and every *Client.js file
+// under src/web are read via fs.readFileSync() and inlined verbatim into
+// every built page's <style>/<script> block, so a leaked comment there ships
+// straight to every visitor's "View Source." Checking only source or only
+// built output would each miss half of that path, so both are checked below.
+const LEAKED_ID = /\btask-[0-9a-z]+-[0-9a-f]+\b|\bdecision-[0-9a-z]+-[0-9a-f]+\b/i;
+
+function inlinedWebSourceFiles() {
+  const webDir = path.join(__dirname, '..', 'src', 'web');
+  return fs.readdirSync(webDir)
+    .filter(f => f === 'screen.css' || f === 'tokens.css' || /Client\.js$/.test(f))
+    .map(f => path.join(webDir, f));
+}
+
 function collectStrings(value, out) {
   if (typeof value === 'string') { out.push(value); return; }
   if (Array.isArray(value)) { value.forEach(v => collectStrings(v, out)); return; }
@@ -53,5 +70,25 @@ test('no rendered HTML output contains a literal or encoded em dash', () => {
     const content = fs.readFileSync(f, 'utf8');
     assert.ok(!content.includes(EM_DASH), `${f} contains a literal em dash (—) -- replace with a plain hyphen or restructure`);
     assert.ok(!EM_DASH_ENCODED.test(content), `${f} contains an HTML-entity-encoded em dash (&mdash; / &#8212; / &#x2014;) -- replace with a plain hyphen or restructure`);
+  }
+});
+
+test('no source file inlined verbatim into HTML/print output contains a leaked internal task/decision id', () => {
+  for (const f of inlinedWebSourceFiles()) {
+    const content = fs.readFileSync(f, 'utf8');
+    assert.ok(!LEAKED_ID.test(content), `${f} contains a leaked internal task/decision id -- describe the "why" without citing the id, it will be inlined verbatim into every built page`);
+  }
+});
+
+test('no rendered HTML output contains a leaked internal task/decision id', () => {
+  build();
+  buildSite();
+  const printFiles = fs.readdirSync(DIST).filter(f => f.endsWith('.html')).map(f => path.join(DIST, f));
+  const webFiles = fs.readdirSync(WEB_DIST).filter(f => f.endsWith('.html')).map(f => path.join(WEB_DIST, f));
+  const files = [...printFiles, ...webFiles];
+  assert.ok(files.length > 0, 'expected at least one built HTML file');
+  for (const f of files) {
+    const content = fs.readFileSync(f, 'utf8');
+    assert.ok(!LEAKED_ID.test(content), `${f} contains a leaked internal task/decision id -- trace it back to its source comment and rewrite without the id`);
   }
 });

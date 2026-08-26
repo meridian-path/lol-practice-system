@@ -25,8 +25,8 @@ const warmups = require(path.join('..', '..', 'content', 'warmups.json'));
 const benchmarks = require(path.join('..', '..', 'content', 'benchmarks.json'));
 const deathCauses = require(path.join('..', '..', 'content', 'deathCauses.json'));
 
-// The web tracker's own client-side logic (task-mt83rhrh-759f27 item 2/5) --
-// read once at require time and inlined verbatim into tracker.html's own
+// The web tracker's own client-side logic -- read once at require time and
+// inlined verbatim into tracker.html's own
 // <script> tag, same pattern src/web/shell.js's SITE_CSS already uses for
 // tokens.css/screen.css. See that file's own header for why it's written to
 // run unmodified in both this Node require() context (its own unit tests)
@@ -40,9 +40,9 @@ const TRACKER_CLIENT_JS = fs.readFileSync(path.join(__dirname, 'trackerClient.js
 // choice here).
 const TRACKER_ROLES = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
 
-// The Start Here routing quiz's own client-side logic (task-mt83rhrh-759f27
-// item 1, rescoped to an enhancement on the existing Start Here/Three-steps
-// sections rather than a from-scratch onboarding build) -- read once at
+// The Start Here routing quiz's own client-side logic (rescoped to an
+// enhancement on the existing Start Here/Three-steps sections rather than a
+// from-scratch onboarding build) -- read once at
 // require time and inlined verbatim, same pattern as TRACKER_CLIENT_JS
 // above and src/web/shell.js's own SITE_CSS.
 const QUIZ_CLIENT_JS = fs.readFileSync(path.join(__dirname, 'quizClient.js'), 'utf8');
@@ -187,7 +187,8 @@ function renderFeatureCards(items) {
       </a>`).join('\n      ');
 }
 
-// Start Here routing quiz (task-mt83rhrh-759f27 item 1, rescoped): three
+// Start Here routing quiz (rescoped from a from-scratch onboarding build to
+// an enhancement on the existing flow): three
 // questions, answered inline on the homepage, that reveal direct links to
 // the matching focus card/drill/warmup once all three are chosen. The
 // heavy lifting (resolving a focus id to its real drill/warmup hrefs) is

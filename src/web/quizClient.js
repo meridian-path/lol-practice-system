@@ -1,7 +1,6 @@
 'use strict';
 
-// Client-side logic for the homepage's "Start Here" routing quiz (item 1 of
-// the 2026-08-25 site-audit task, task-mt83rhrh-759f27 - rescoped by HQ
+// Client-side logic for the homepage's "Start Here" routing quiz (rescoped
 // after checking the live site: the static "Three steps to start"/"Start
 // here" sections already exist, so this is an ENHANCEMENT that adds
 // interactive routing on top of them, not a from-scratch onboarding

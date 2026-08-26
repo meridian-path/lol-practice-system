@@ -436,7 +436,7 @@ main.page-shell {
 .feature-card h3 { margin: 0 0 var(--space-2); }
 .feature-card p { margin: 0; color: var(--muted); }
 
-/* Start Here routing quiz (index.html, task-mt83rhrh-759f27 item 1) -- a
+/* Start Here routing quiz (index.html) -- a
    simple 3-field form, self-contained rather than reusing tracker.html's
    own form styling (a separate, larger feature built in parallel) to avoid
    a cross-branch class dependency. */
@@ -499,7 +499,7 @@ main.page-shell {
 .quiz-result-card p { margin: 0; color: var(--muted); }
 
 /* ---------------------------------------------------------------------------
-   Role filter (focus-menu.html/drills.html, task-mt83rhrh-759f27 item 3) --
+   Role filter (focus-menu.html/drills.html) --
    a row of toggle buttons, `aria-pressed` communicating the active one
    rather than a color-only signal. Hiding a filtered-out card relies on the
    browser's own default `[hidden] { display: none }` -- unlike
@@ -647,15 +647,26 @@ main.page-shell {
   color: var(--ink);
   margin: 0 0 var(--space-2);
 }
+/* Substack's raw signup iframe is a plain white box with its own orange
+   button -- can't be restyled cross-origin, and Substack's own docs confirm
+   the embed form has no color/theme option, so this frame gives it generous
+   token-driven breathing room instead, rather than letting the white box
+   touch the site's dark background/accent directly. */
+.newsletter-embed-frame {
+  margin-top: var(--space-3);
+  max-width: 480px;
+  padding: var(--space-3);
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
 .newsletter-embed {
   display: block;
   width: 100%;
-  max-width: 480px;
   height: 320px;
-  margin-top: var(--space-3);
-  border: 1px solid var(--border);
+  border: none;
   border-radius: var(--radius-sm);
-  background: var(--paper);
+  background: var(--color-bg-white);
 }
 
 /* ---------------------------------------------------------------------------
@@ -692,8 +703,8 @@ main.page-shell {
 .card-slot .slot-value.pass-bar { color: var(--good); }
 .card-slot .slot-value.common-failure { color: var(--warn); }
 
-/* Mobile-first drill/warmup accordions (drills.html/warmup.html,
-   task-mt83rhrh-759f27 item 7) - a native <details>/<summary> wrapping
+/* Mobile-first drill/warmup accordions (drills.html/warmup.html) - a
+   native <details>/<summary> wrapping
    each .card, collapsed by default so a player on a phone mid-session taps
    straight to the one card they need instead of scrolling past the rest.
    The inner .card-title is hidden here (not removed server-side) since the
@@ -787,8 +798,33 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
 }
 .drill-grid .card { margin-bottom: 0; }
 
+/* The "Your Rank" select and jungle-role checkbox sit directly in
+   .tracker-app, outside both .tracker-form and .quiz-form below -- the only
+   two selectors this stylesheet themed until now -- so they rendered as
+   unstyled native browser controls on an otherwise fully themed page.
+   Reuses .tracker-form select's own token values rather than inventing a
+   third pattern (token-role consistency per REFERENCE_LIBRARY.md #15,
+   Radix Colors; the GOV.UK form pattern at #14 is the standing rule to
+   theme every control we ask a visitor to fill in, not just some of them).
+   The `> label >` scoping targets only these two top-of-page controls, not
+   .tracker-form's own nested select which already has its own rule below. */
+.tracker-app > label > select {
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+}
+.tracker-app > label > input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
 /* ---------------------------------------------------------------------------
-   Web tracker (tracker.html, task-mt83rhrh-759f27 item 2/5) -- the site's
+   Web tracker (tracker.html) -- the site's
    first real interactive form UI. Reuses .card/.data-table/.callout/
    .btn-primary rather than inventing parallel styles for the same visual
    idea; only genuinely new patterns (the form grid, the progress boxes) get
