@@ -1,7 +1,7 @@
 'use strict';
 
-// Tests for the drill/warmup card accordion (task-mt83rhrh-759f27 item 7,
-// mobile-first priority for drills.html/warmup.html). The interactive
+// Tests for the drill/warmup card accordion (mobile-first priority for
+// drills.html/warmup.html). The interactive
 // expand/collapse itself is a native <details>/<summary> browser feature,
 // not custom JS - nothing to unit test there. What IS this repo's own
 // code: that every card is actually wrapped this way with the right id,
