@@ -44,6 +44,19 @@ test('every content page has exactly one <h1> and no heading level is skipped', 
   }
 });
 
+test('a content page\'s <h1> never repeats its first <h2> verbatim', () => {
+  for (const [name, html] of rendered) {
+    const h1Match = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/);
+    const h2Match = html.match(/<h2[^>]*>([\s\S]*?)<\/h2>/);
+    if (!h1Match || !h2Match) continue;
+    assert.notEqual(
+      h1Match[1].trim(),
+      h2Match[1].trim(),
+      `${name}'s <h1> duplicates its first <h2> verbatim ("${h1Match[1].trim()}") - a screen reader (and a sighted skim) hits the same heading twice in a row; reword one`
+    );
+  }
+});
+
 test('every content page carries no manual ad-slot placeholder (Auto ads loads unconditionally, so the old empty placeholder wells were removed rather than left visually coexisting with it)', () => {
   for (const [name, html] of rendered) {
     const count = (html.match(/class="ad-slot"/g) || []).length;

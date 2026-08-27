@@ -280,7 +280,7 @@ function renderRoleFilterBar() {
 // focus-menu.html -- guide A4 (focus cards, with drill deep-links) + A10
 // ---------------------------------------------------------------------------
 function renderFocusMenu() {
-  const introHtml = `<h1>The Focus Menu</h1>
+  const introHtml = `<h1>The Focus Menu: 12 Things to Work On</h1>
     <p class="lead">Twelve measurable things you could work on. Pick exactly one per block, based on what your baseline shows, run its drill, and hold it until it graduates.</p>`;
   const a4 = section('a4-the-focus-menu');
   const a4Html = `<section class="guide-section">
@@ -371,7 +371,7 @@ function renderVodReview() {
 // tilt-rules.html -- guide A9
 // ---------------------------------------------------------------------------
 function renderTiltRules() {
-  const introHtml = `<h1>Tilt and Stop Rules</h1>
+  const introHtml = `<h1>Pre-Committed Tilt and Stop Rules</h1>
     <p class="lead">Pre-committed rules for when to stop a session, decided before you are tilted enough to need them.</p>`;
   return buildPage({
     file: 'tilt-rules.html',
@@ -412,7 +412,7 @@ function extractFaqPairs() {
 }
 
 function renderFaq() {
-  const introHtml = `<h1>FAQ and What This Is Not</h1>
+  const introHtml = `<h1>Frequently Asked Questions</h1>
     <p class="lead">Straight answers, including about what this program cannot promise.</p>`;
   return buildPage({
     file: 'faq.html',
