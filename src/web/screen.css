@@ -322,9 +322,9 @@ main.page-shell {
      this reads as content pinned to the left edge with the right half of
      the page empty. Center it across the grid's full width instead --
      max-width: var(--measure) above already caps the actual prose
-     column at 66ch, so this only changes where that capped column sits.
-     Per design-standards.md: "prose ... positioned by the grid rather
-     than left-orphaned in a wider container." */
+     column at 66ch, so this only changes where that capped column sits --
+     prose should be positioned by the grid rather than left-orphaned in a
+     wider container. */
   .page-shell > .zone-measure:only-child {
     grid-column: 1 / -1;
     justify-self: center;
@@ -803,10 +803,10 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
    two selectors this stylesheet themed until now -- so they rendered as
    unstyled native browser controls on an otherwise fully themed page.
    Reuses .tracker-form select's own token values rather than inventing a
-   third pattern (token-role consistency per REFERENCE_LIBRARY.md #15,
-   Radix Colors; the GOV.UK form pattern at #14 is the standing rule to
-   theme every control we ask a visitor to fill in, not just some of them).
-   The `> label >` scoping targets only these two top-of-page controls, not
+   third pattern -- every control we ask a visitor to fill in should be
+   themed, not just some of them, and reusing an existing pattern keeps
+   token roles consistent instead of adding a new one-off. The `> label >`
+   scoping targets only these two top-of-page controls, not
    .tracker-form's own nested select which already has its own rule below. */
 .tracker-app > label > select {
   padding: var(--space-2);
@@ -865,7 +865,7 @@ table.data-table th.num { text-align: right; font-variant-numeric: tabular-nums;
   color: var(--ink);
   font: inherit;
 }
-/* A distinct style from .btn-primary on purpose: design-standards.md's own
+/* A distinct style from .btn-primary on purpose: this site's own
    "exactly one primary action per page" rule reserves .btn-primary for the
    workbook download below, so these form-scoped submit buttons (there are
    two, one per form) get their own clearly-actionable-but-secondary look

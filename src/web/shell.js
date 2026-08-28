@@ -283,8 +283,8 @@ function renderFooterCredit() {
  * customization option (only hiding the publication logo) -- so
  * .newsletter-embed-frame below softens the white-box collision with generous
  * token-driven padding/border/radius around it rather than attempting to
- * eliminate it (token-role consistency per REFERENCE_LIBRARY.md #15, Radix
- * Colors).
+ * eliminate it, reusing this site's existing token roles instead of adding
+ * a one-off pattern.
  */
 function renderNewsletterSignup() {
   const embedTitle = 'Email signup for Solo Queue Practice updates';

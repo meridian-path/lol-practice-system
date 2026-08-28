@@ -58,8 +58,8 @@ repo's root - read it in full before anything else if this is the first run this
    `node "C:\Users\dylan\Dev\TheOrchestra\orchestrator\lib\cli.js" merge-queue-status` afterward
    for the outcome (`ready_for_human_merge`/`rebase_failed`/`test_failed`/etc. - a failure just
    means the branch is left rebased-but-unpushed for you to fix and re-run, nothing is lost).
-   Validated end to end against this repo's own real `npm test` command (task-mt638skf-4558aa,
-   2026-08-23) - no code changes were needed for external-repo adoption; the tool's own
+   Validated end to end against this repo's own real `npm test` command
+   (2026-08-23) - no code changes were needed for external-repo adoption; the tool's own
    external-repo path runs directly against whatever `--repo` you give it, guarded by the same
    claim-check `push-branch` already uses (blocked if some other agent has a live claim on this
    repo, keyed by directory basename against the task's own `asset`/`footprint`).
