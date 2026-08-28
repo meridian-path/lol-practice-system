@@ -22,6 +22,7 @@
 const fs = require('fs');
 const path = require('path');
 
+const { smartenHtml } = require('../render/smartQuotes.js');
 const site = require('../site.js');
 const shell = require('./shell.js');
 const { CONTENT_PAGES } = require('./contentPages.js');
@@ -160,7 +161,12 @@ function build() {
   const htmlPages = [];
   written.push(writeFile('site.css', shell.SITE_CSS));
   for (const [name, render] of WEB_PAGES) {
-    const content = render();
+    const rendered = render();
+    // Straight-apostrophe-to-curly normalization runs on rendered HTML text
+    // nodes only (never on non-HTML output like site.css) -- see
+    // src/render/smartQuotes.js's own header for why this is a single
+    // post-render pass rather than a per-page-module fix.
+    const content = name.endsWith('.html') ? smartenHtml(rendered) : rendered;
     written.push(writeFile(name, content));
     if (name.endsWith('.html')) {
       htmlPages.push({ file: name, html: content });
