@@ -4,6 +4,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const drills = require('../content/drills.json');
 const focuses = require('../content/focuses.json');
@@ -34,11 +35,60 @@ const EM_DASH_ENCODED = /&mdash;|&#8212;|&#x2014;/i;
 // built output would each miss half of that path, so both are checked below.
 const LEAKED_ID = /\btask-[0-9a-z]+-[0-9a-f]+\b|\bdecision-[0-9a-z]+-[0-9a-f]+\b/i;
 
+// Internal governing-doc filenames and internal rotation/series labels --
+// like the task/decision id shape above, these name Orchestra's own internal
+// process docs and audit rotations, meaningless (and revealing) to a visitor
+// reading "View Source" or browsing this repo's source on GitHub. Found live
+// in screen.css/shell.js comments (6th monthly audit, 2026-08-28) even though
+// LEAKED_ID's id-shape regex never matches a bare filename like this.
+const DOC_LEAK = /\bdesign-standards\.md\b|\bqa\.md\b|\bCRAFT_DOCTRINE\b|\bDESIGN_PLAYBOOK\b|\bREFERENCE_LIBRARY\b|\bGOALS\.md\b|\bTESTING\.md\b|\bWS-\d+\b|\bPhase-\d+\b|\bspec-section-\d+\b|\bsite-audit-item-\d+\b/i;
+
+// Tracked-file extensions this scan can't safely read as text.
+const BINARY_EXT = /\.(png|jpe?g|gif|ico|xlsx|pdf|woff2?|ttf|eot)$/i;
+
 function inlinedWebSourceFiles() {
   const webDir = path.join(__dirname, '..', 'src', 'web');
   return fs.readdirSync(webDir)
     .filter(f => f === 'screen.css' || f === 'tokens.css' || /Client\.js$/.test(f))
     .map(f => path.join(webDir, f));
+}
+
+// The full git-tracked tree (source of truth for what a public GitHub repo
+// actually ships), not just the inlined-file allowlist above -- an id or doc
+// name can leak from any tracked file, not only ones read verbatim into a
+// built page (e.g. .claude/commands/conduct-lite.md, scripts/*.js), and the
+// repeated real-world failure shape has specifically been a tracked file this
+// checker's old narrower scope never looked at.
+function allTrackedFiles() {
+  const root = path.join(__dirname, '..');
+  const out = execFileSync('git', ['ls-files'], { cwd: root, encoding: 'utf8' });
+  return out.split('\n')
+    .filter(Boolean)
+    .filter(f => !f.startsWith('node_modules/') && !f.startsWith('dist/'))
+    .filter(f => !BINARY_EXT.test(f))
+    .map(f => path.join(root, f));
+}
+
+// This site's own shipped/tooling source -- everything actually written for
+// this product (page builders, styles, content data, build/QA scripts), as
+// opposed to this repo's separate Orchestra-operational files (SESSION_SCOPE.md,
+// ROLLING_PLAN.md, .claude/commands/*.md) which necessarily and legitimately
+// name these same internal docs/rotations as part of describing the session's
+// own operating process -- flagged as its own finding rather than folded in
+// here, since scanning those too would require rewriting genuinely necessary
+// operating instructions, not fixing an accidental leak.
+function siteSourceFiles() {
+  const root = path.join(__dirname, '..');
+  const results = [];
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (/\.(js|css)$/.test(entry.name)) results.push(full);
+    }
+  }
+  for (const d of ['src', 'scripts', 'content']) walk(path.join(root, d));
+  return results;
 }
 
 function collectStrings(value, out) {
@@ -90,5 +140,32 @@ test('no rendered HTML output contains a leaked internal task/decision id', () =
   for (const f of files) {
     const content = fs.readFileSync(f, 'utf8');
     assert.ok(!LEAKED_ID.test(content), `${f} contains a leaked internal task/decision id -- trace it back to its source comment and rewrite without the id`);
+  }
+});
+
+test('no file in the full git-tracked tree contains a leaked internal task/decision id', () => {
+  for (const f of allTrackedFiles()) {
+    const content = fs.readFileSync(f, 'utf8');
+    assert.ok(!LEAKED_ID.test(content), `${f} contains a leaked internal task/decision id -- describe the "why" without citing the id`);
+  }
+});
+
+test('no site source file (src/, scripts/, content/) contains a leaked internal governing-doc filename or series label', () => {
+  for (const f of siteSourceFiles()) {
+    const content = fs.readFileSync(f, 'utf8');
+    assert.ok(!DOC_LEAK.test(content), `${f} contains a reference to an internal governing-doc filename or series label -- describe the "why" without naming the internal doc`);
+  }
+});
+
+test('no rendered HTML output contains a leaked internal governing-doc filename or series label', () => {
+  build();
+  buildSite();
+  const printFiles = fs.readdirSync(DIST).filter(f => f.endsWith('.html')).map(f => path.join(DIST, f));
+  const webFiles = fs.readdirSync(WEB_DIST).filter(f => f.endsWith('.html')).map(f => path.join(WEB_DIST, f));
+  const files = [...printFiles, ...webFiles];
+  assert.ok(files.length > 0, 'expected at least one built HTML file');
+  for (const f of files) {
+    const content = fs.readFileSync(f, 'utf8');
+    assert.ok(!DOC_LEAK.test(content), `${f} contains a leaked internal governing-doc filename or series label`);
   }
 });

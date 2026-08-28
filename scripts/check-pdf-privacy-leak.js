@@ -4,7 +4,7 @@
  * Mechanical check for the local-path/username leak class that src/pdf.js's
  * old --print-to-pdf CLI usage produced (a browser-default print footer
  * stamping "file:///C:/Users/<name>/.../dist/print/<page>.html" on every
- * page of every shipped PDF -- see decision-mt36h0hc-101e8c).
+ * page of every shipped PDF).
  *
  * A byte-level grep over the raw PDF file does NOT catch this: PDF text is
  * stored as font glyph codes in a compressed content stream, not as literal
@@ -66,7 +66,7 @@ async function extractPdfText(buffer) {
   return pages.join('\n');
 }
 
-/** The patterns this check exists to catch, per decision-mt36h0hc-101e8c:
+/** The patterns this check exists to catch:
  * a file:// source URL, and the local OS account name (which shows up as
  * part of a Windows home-directory path, e.g. C:\Users\<name>\...). Returns
  * only patterns worth checking -- an empty/unavailable username is skipped

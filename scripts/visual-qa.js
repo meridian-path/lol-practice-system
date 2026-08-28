@@ -3,8 +3,8 @@
 /**
  * Local visual-QA harness: screenshots a page at three viewports and prints
  * a Lighthouse (Performance/Accessibility/Best Practices/SEO) score summary
- * to stdout -- the same four categories design-standards.md's 90-floor rule
- * checks against.
+ * to stdout -- the same four categories this site's own 90-floor quality
+ * rule checks against.
  *
  * Usage:
  *   npm run visual-qa -- <url-or-local-file-path>
