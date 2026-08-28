@@ -10,6 +10,7 @@ const warmups = require('../content/warmups.json');
 const guide = require('../content/guide.js');
 
 const pages = require('./render/pages.js');
+const { smartenHtml } = require('./render/smartQuotes.js');
 const { buildTrackerWorkbook } = require('./xlsx/workbook.js');
 
 // The print pack now lives under dist/print/, sharing
@@ -30,8 +31,12 @@ function cleanDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
 }
 
+// Every call site below passes an .html filename -- print.css and the .xlsx
+// workbook are written directly via fs.writeFileSync, not through here -- so
+// smartenHtml() (straight-to-curly apostrophe normalization on text nodes
+// only, see src/render/smartQuotes.js) is safe to apply unconditionally.
 function writeFile(name, content) {
-  fs.writeFileSync(path.join(DIST, name), content, 'utf8');
+  fs.writeFileSync(path.join(DIST, name), smartenHtml(content), 'utf8');
   return name;
 }
 
