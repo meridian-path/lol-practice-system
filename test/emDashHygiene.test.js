@@ -33,15 +33,19 @@ const EM_DASH_ENCODED = /&mdash;|&#8212;|&#x2014;/i;
 // every built page's <style>/<script> block, so a leaked comment there ships
 // straight to every visitor's "View Source." Checking only source or only
 // built output would each miss half of that path, so both are checked below.
-const LEAKED_ID = /\btask-[0-9a-z]+-[0-9a-f]+\b|\bdecision-[0-9a-z]+-[0-9a-f]+\b/i;
-
+//
 // Internal governing-doc filenames and internal rotation/series labels --
-// like the task/decision id shape above, these name Orchestra's own internal
-// process docs and audit rotations, meaningless (and revealing) to a visitor
-// reading "View Source" or browsing this repo's source on GitHub. Found live
-// in screen.css/shell.js comments (6th monthly audit, 2026-08-28) even though
-// LEAKED_ID's id-shape regex never matches a bare filename like this.
-const DOC_LEAK = /\bdesign-standards\.md\b|\bqa\.md\b|\bCRAFT_DOCTRINE\b|\bDESIGN_PLAYBOOK\b|\bREFERENCE_LIBRARY\b|\bGOALS\.md\b|\bTESTING\.md\b|\bWS-\d+\b|\bPhase-\d+\b|\bspec-section-\d+\b|\bsite-audit-item-\d+\b/i;
+// like the id shape above, these name Orchestra's own internal process docs
+// and audit rotations, meaningless (and revealing) to a visitor reading
+// "View Source" or browsing this repo's source on GitHub. Found live in
+// screen.css/shell.js comments (6th monthly audit, 2026-08-28) even though
+// the id-shape regex never matches a bare filename like this.
+//
+// Both patterns live in scripts/check-internal-ids.js, not inline here, so
+// scripts/hooks/pr-metadata-id-leak-guard.js (the gh pr create/edit guard)
+// scans the exact same leak shapes as this build-time check, rather than
+// drifting into a second, independently-maintained copy.
+const { ID_RE: LEAKED_ID, DOC_FILENAME_RE: DOC_LEAK } = require('../scripts/check-internal-ids.js');
 
 // Tracked-file extensions this scan can't safely read as text.
 const BINARY_EXT = /\.(png|jpe?g|gif|ico|xlsx|pdf|woff2?|ttf|eot)$/i;
@@ -52,6 +56,14 @@ function inlinedWebSourceFiles() {
     .filter(f => f === 'screen.css' || f === 'tokens.css' || /Client\.js$/.test(f))
     .map(f => path.join(webDir, f));
 }
+
+// test/pr-metadata-id-leak-guard.test.js needs literal id-shaped fixtures ("task-mt6jcfwr-
+// ab12" etc.) to actually exercise scripts/hooks/pr-metadata-id-leak-guard.js's own reuse of
+// this file's ID_RE/DOC_FILENAME_RE patterns -- test data, not a real leak. Same shape and
+// same reasoning as filetools' own check-internal-ids.js EXCLUDED_FILES list.
+const EXCLUDED_FILES = [path.join(__dirname, 'pr-metadata-id-leak-guard.test.js')].map((f) =>
+  path.resolve(f)
+);
 
 // The full git-tracked tree (source of truth for what a public GitHub repo
 // actually ships), not just the inlined-file allowlist above -- an id or doc
@@ -66,7 +78,8 @@ function allTrackedFiles() {
     .filter(Boolean)
     .filter(f => !f.startsWith('node_modules/') && !f.startsWith('dist/'))
     .filter(f => !BINARY_EXT.test(f))
-    .map(f => path.join(root, f));
+    .map(f => path.join(root, f))
+    .filter(f => !EXCLUDED_FILES.includes(path.resolve(f)));
 }
 
 // This site's own shipped/tooling source -- everything actually written for
@@ -88,7 +101,11 @@ function siteSourceFiles() {
     }
   }
   for (const d of ['src', 'scripts', 'content']) walk(path.join(root, d));
-  return results;
+  // scripts/check-internal-ids.js's own DOC_FILENAME_RE definition necessarily contains the
+  // literal doc-filename/series-label strings it exists to detect -- the pattern's own source,
+  // not a leak. Same shape as EXCLUDED_FILES above, and the identical reasoning filetools' own
+  // check-internal-ids.js states for excluding itself the same way.
+  return results.filter((f) => path.resolve(f) !== path.resolve(root, 'scripts', 'check-internal-ids.js'));
 }
 
 function collectStrings(value, out) {
