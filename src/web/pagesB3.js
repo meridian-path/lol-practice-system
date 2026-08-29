@@ -271,10 +271,10 @@ function renderHome() {
         </div>`).join('\n        ');
 
   const body = `<section class="hero zone-measure">
-      <span class="hero-eyebrow t-label">Free &middot; No account</span>
       <h1 class="t-display">${escapeHtml(site.SITE_NAME)}</h1>
       <p class="lead">${escapeHtml(site.SITE_TAGLINE)}</p>
       <a class="btn-primary" href="${escapeHtml(site.url('program.html'))}">Start the 30-day program</a>
+      <p class="hero-note t-metadata">Free to use. No account, no email, nothing to install.</p>
     </section>
     <aside class="stat-rail zone-rail" aria-label="Program at a glance">
       <div class="stat-rail-figures">
@@ -285,9 +285,9 @@ function renderHome() {
     <section class="zone-content">
       <h2>Three steps to start</h2>
       <ol class="steps-strip">
-        <li><span class="step-index t-label">01</span><p class="t-compact">Log your last ten ranked games and compare your numbers against the benchmarks on the baseline page.</p></li>
-        <li><span class="step-index t-label">02</span><p class="t-compact">Pick the single weakest measurable thing from the focus menu and run its drill before your next session.</p></li>
-        <li><span class="step-index t-label">03</span><p class="t-compact">Play with that one focus held for two or three games, log every game, and review after.</p></li>
+        <li><span class="step-tag t-label">Log</span><p class="t-compact">Log your last ten ranked games and compare your numbers against the benchmarks on the baseline page.</p></li>
+        <li><span class="step-tag t-label">Pick</span><p class="t-compact">Pick the single weakest measurable thing from the focus menu and run its drill before your next session.</p></li>
+        <li><span class="step-tag t-label">Play</span><p class="t-compact">Play with that one focus held for two or three games, log every game, and review after.</p></li>
       </ol>
     </section>
     ${renderStartHereQuiz()}

@@ -338,9 +338,15 @@ main.page-shell {
 /* ---------------------------------------------------------------------------
    Hero (home page)
    --------------------------------------------------------------------------- */
-.hero-eyebrow { display: block; margin-bottom: var(--space-3); color: var(--accent); }
 .hero h1 { margin-bottom: var(--space-3); }
 .hero .lead { margin-bottom: var(--space-5); }
+/* Trust/disclosure line -- sits after the primary action rather than as an
+   eyebrow label above the headline (the generic pattern the taste
+   guardrails call out). Reuses the stat rail's own metadata role (mono,
+   sentence case, tabular figures) so a claim like this reads as the same
+   kind of stated fact as the "12 focuses / 12 drills" figures beside it,
+   not a decorative marketing tag. */
+.hero-note { margin-top: var(--space-3); color: var(--muted); }
 
 .btn-primary {
   display: inline-flex;
@@ -402,10 +408,19 @@ main.page-shell {
   .steps-strip { grid-template-columns: repeat(3, 1fr); }
 }
 .steps-strip li {
-  border-top: 1px solid var(--rule);
+  /* 3px accent-rule top border, same weight/color as .feature-card below --
+     one connected visual language for "steps in this program" across both
+     sections, instead of each step getting its own boxed 01/02/03 badge. */
+  border-top: 3px solid var(--accent-rule);
   padding-top: var(--space-3);
   margin: 0;
 }
+/* Step tags name the real action each step asks for (Log/Pick/Play, pulled
+   straight from that step's own first word) instead of an ascending
+   index -- the .t-label role (mono, uppercase, tracked) already used for
+   nav items and table headers, applied here to real content rather than a
+   generic numeral. */
+.step-tag { display: block; color: var(--accent); margin-bottom: var(--space-2); }
 .step-index { display: block; color: var(--accent); margin-bottom: var(--space-2); }
 
 /* ---------------------------------------------------------------------------
